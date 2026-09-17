@@ -1,0 +1,1323 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Калькулятор чаевых</title>
+<style>
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: #0f172a;
+    color: #e2e8f0;
+    margin: 0 auto;
+    padding: 12px;
+    padding-bottom: 40px;
+    max-width: 520px;
+    overflow-x: hidden;
+  }
+  h1 { font-size: 20px; text-align: center; margin: 8px 0 20px; color: #f1f5f9; }
+  .card {
+    background: #1e293b;
+    border-radius: 14px;
+    padding: 14px;
+    margin-bottom: 14px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+  }
+  .row { display: flex; gap: 10px; margin-bottom: 12px; align-items: center; }
+  .row label { flex: 0 0 100px; font-size: 14px; color: #94a3b8; }
+  .row input {
+    flex: 1;
+    background: #0f172a;
+    border: 1px solid #334155;
+    color: #f1f5f9;
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-size: 16px;
+    width: 100%;
+    min-width: 0;
+  }
+  .row input:focus { outline: none; border-color: #38bdf8; }
+  .runner-toggle {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #0f172a;
+    border: 1px solid #334155;
+    border-radius: 10px;
+    padding: 12px;
+    cursor: pointer;
+    user-select: none;
+    margin-top: 4px;
+  }
+  .runner-toggle.on { border-color: #38bdf8; background: #0c2338; }
+  .runner-toggle .switch {
+    width: 44px; height: 24px;
+    background: #475569;
+    border-radius: 12px;
+    position: relative;
+    transition: background 0.2s;
+    flex-shrink: 0;
+  }
+  .runner-toggle.on .switch { background: #38bdf8; }
+  .runner-toggle .switch::after {
+    content: '';
+    position: absolute;
+    top: 2px; left: 2px;
+    width: 20px; height: 20px;
+    background: white;
+    border-radius: 50%;
+    transition: transform 0.2s;
+  }
+  .runner-toggle.on .switch::after { transform: translateX(20px); }
+  .runner-toggle .text { flex: 1; font-size: 14px; color: #e2e8f0; min-width: 0; }
+  .runner-toggle .text small { display: block; color: #64748b; font-size: 12px; margin-top: 2px; }
+  .summary {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    font-size: 15px;
+    border-bottom: 1px dashed #334155;
+  }
+  .summary:last-child { border-bottom: none; }
+  .summary .val { font-weight: 600; color: #f1f5f9; }
+  .summary.highlight .val { color: #38bdf8; }
+  .summary.warn .val { color: #fbbf24; }
+  .summary.big { font-size: 17px; padding-top: 12px; }
+  h2 {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #94a3b8;
+    margin: 0 0 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+  h2 .tag {
+    font-size: 11px;
+    color: #64748b;
+    text-transform: none;
+    letter-spacing: 0;
+  }
+  .staff-card {
+    background: #0f172a;
+    border: 1px solid #334155;
+    border-radius: 10px;
+    padding: 12px;
+    margin-bottom: 8px;
+  }
+  .staff-card .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .staff-card .title { font-size: 14px; color: #e2e8f0; font-weight: 600; }
+  .staff-card .title small { color: #64748b; font-size: 12px; font-weight: 400; display: block; margin-top: 2px; }
+  .staff-card .men-buttons { display: flex; gap: 6px; }
+  .staff-card .men-buttons button {
+    background: #1e293b;
+    border: 1px solid #334155;
+    color: #94a3b8;
+    border-radius: 8px;
+    width: 40px; height: 34px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .staff-card .men-buttons button:active { background: #334155; }
+  .staff-card .men-buttons button.active { background: #38bdf8; color: #0f172a; border-color: #38bdf8; }
+  .staff-card .line {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 0;
+    font-size: 13px;
+    color: #94a3b8;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .staff-card .line .label { color: #94a3b8; }
+  .staff-card .line .val { color: #fbbf24; font-weight: 600; }
+  .staff-card .line .val-pay { color: #4ade80; font-weight: 600; }
+  .staff-card .line .val-round { color: #94a3b8; font-weight: 400; font-size: 12px; }
+  .staff-card .line.minus .val-pay { color: #f87171; }
+
+  /* Блок наглядного расчёта 30% */
+  .breakdown {
+    background: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 10px;
+    padding: 10px 12px;
+    margin-top: 10px;
+    font-size: 12px;
+  }
+  .breakdown .bl {
+    display: flex;
+    justify-content: space-between;
+    padding: 3px 0;
+    color: #94a3b8;
+    gap: 8px;
+  }
+  .breakdown .bl .v { color: #e2e8f0; font-weight: 600; }
+  .breakdown .bl.add .v { color: #4ade80; }
+  .breakdown .bl.divide {
+    border-top: 1px dashed #334155;
+    margin-top: 5px;
+    padding-top: 6px;
+    font-weight: 600;
+    color: #38bdf8;
+  }
+  .breakdown .bl.divide .v { color: #38bdf8; }
+  .breakdown .bl.minus .v { color: #f87171; }
+  .breakdown .bl.total {
+    border-top: 1px solid #334155;
+    margin-top: 6px;
+    padding-top: 6px;
+    font-weight: 600;
+    color: #e2e8f0;
+  }
+  .breakdown .bl.total .v { color: #38bdf8; }
+
+  .kitchen-cut {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 8px;
+    padding: 8px 10px;
+    margin-top: 8px;
+  }
+  .kitchen-cut label {
+    flex: 0 0 auto;
+    font-size: 12px;
+    color: #94a3b8;
+  }
+  .kitchen-cut input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: #f87171;
+    font-size: 15px;
+    font-weight: 700;
+    padding: 4px 0;
+    min-width: 0;
+    text-align: right;
+  }
+  .kitchen-cut input:focus { outline: none; }
+  .kitchen-cut .suffix { font-size: 12px; color: #64748b; flex-shrink: 0; }
+
+  .waiter {
+    background: #0f172a;
+    border: 1px solid #334155;
+    border-radius: 10px;
+    padding: 12px;
+    margin-bottom: 10px;
+    overflow: hidden;
+    width: 100%;
+  }
+  .waiter.over { border-color: #ef4444; background: #2a0e0e; }
+  .waiter.gm { border-color: #a855f7; background: #1a0f2e; }
+  .waiter.over.gm { border-color: #ef4444; background: #2a0e0e; }
+
+  .waiter .top {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  .waiter input.name {
+    flex: 1;
+    background: transparent;
+    border: none;
+    border-bottom: 1px dashed #334155;
+    color: #f1f5f9;
+    font-size: 15px;
+    font-weight: 600;
+    padding: 4px 0;
+    min-width: 0;
+    width: 100%;
+  }
+  .waiter input.name:focus { outline: none; border-color: #38bdf8; }
+  .waiter .btn-remove {
+    background: transparent;
+    border: 1px solid #475569;
+    color: #94a3b8;
+    border-radius: 8px;
+    width: 32px; height: 32px;
+    font-size: 16px;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+  .waiter .btn-remove:active { background: #334155; }
+
+  .section-label {
+    font-size: 11px;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 6px;
+    margin-top: 12px;
+  }
+  .section-label:first-child { margin-top: 0; }
+
+  .segmented {
+    display: flex;
+    gap: 0;
+    background: #1e293b;
+    border-radius: 6px;
+    padding: 2px;
+    width: 100%;
+    min-width: 0;
+  }
+  .segmented button {
+    flex: 1 1 0;
+    background: transparent;
+    border: none;
+    color: #64748b;
+    padding: 8px 4px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 4px;
+    min-width: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .segmented button.active { background: #38bdf8; color: #0f172a; }
+  .segmented.pay button.active[data-type="cash"] { background: #4ade80; color: #0f172a; }
+  .segmented.pay button.active[data-type="card"] { background: #38bdf8; color: #0f172a; }
+  .segmented.pay button.active[data-type="auto"] { background: #a855f7; color: #0f172a; }
+
+  .mode-row {
+    display: flex;
+    gap: 6px;
+    align-items: stretch;
+    width: 100%;
+  }
+  .mode-row .segmented { flex: 1 1 auto; min-width: 0; }
+  .mode-row .fixgm {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    font-size: 11px;
+    color: #94a3b8;
+    cursor: pointer;
+    white-space: nowrap;
+    background: #1e293b;
+    padding: 8px 8px;
+    border-radius: 6px;
+    flex: 0 0 auto;
+  }
+  .mode-row .fixgm input { margin: 0; }
+
+  .hours-wrap {
+    display: inline-flex;
+    gap: 6px;
+    align-items: center;
+    background: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 8px;
+    padding: 4px;
+    transition: border-color 0.15s;
+    width: auto;
+    max-width: 160px;
+  }
+  .hours-wrap:focus-within { border-color: #38bdf8; }
+  .hours-wrap .icon {
+    flex-shrink: 0;
+    width: 28px; height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #38bdf8;
+    font-size: 15px;
+  }
+  .hours-wrap input.hours {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: #f1f5f9;
+    font-size: 15px;
+    font-weight: 600;
+    padding: 4px 0;
+    min-width: 0;
+    width: 50px;
+    text-align: left;
+  }
+  .hours-wrap input.hours:focus { outline: none; }
+  .hours-wrap input.hours::placeholder { color: #475569; font-weight: 400; }
+  .hours-wrap .hint-text { flex-shrink: 0; font-size: 11px; color: #64748b; padding-right: 8px; }
+
+  .share-wrap {
+    display: inline-flex;
+    gap: 6px;
+    align-items: center;
+    background: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 8px;
+    padding: 4px;
+    transition: border-color 0.15s;
+    width: auto;
+    max-width: 160px;
+  }
+  .share-wrap:focus-within { border-color: #38bdf8; }
+  .share-wrap .icon {
+    flex-shrink: 0;
+    width: 28px; height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fbbf24;
+    font-size: 15px;
+  }
+  .share-wrap input.manual-share {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: #f1f5f9;
+    font-size: 15px;
+    font-weight: 600;
+    padding: 4px 0;
+    min-width: 0;
+    width: 50px;
+    text-align: left;
+  }
+  .share-wrap input.manual-share:focus { outline: none; }
+  .share-wrap input.manual-share::placeholder { color: #475569; font-weight: 400; }
+  .share-wrap .hint-text { flex-shrink: 0; font-size: 11px; color: #64748b; padding-right: 8px; }
+
+  .preset-row { display: flex; gap: 6px; margin-top: 8px; width: 100%; }
+  .preset-row .preset-mini {
+    flex: 1 1 0;
+    background: transparent;
+    border: 1px solid #334155;
+    color: #94a3b8;
+    border-radius: 8px;
+    padding: 8px 4px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s;
+    min-width: 0;
+    white-space: nowrap;
+  }
+  .preset-row .preset-mini:hover { border-color: #475569; color: #cbd5e1; }
+  .preset-row .preset-mini:active { background: #334155; color: #f1f5f9; }
+
+  .personal-wrap {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    background: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 8px;
+    padding: 4px;
+    transition: border-color 0.15s;
+    width: 100%;
+    min-width: 0;
+  }
+  .personal-wrap:focus-within { border-color: #a855f7; }
+  .personal-wrap .icon {
+    flex-shrink: 0;
+    width: 28px; height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #a855f7;
+    font-size: 15px;
+  }
+  .personal-wrap input.personal {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: #f1f5f9;
+    font-size: 15px;
+    font-weight: 600;
+    padding: 4px 0;
+    min-width: 0;
+    text-align: left;
+    width: 100%;
+  }
+  .personal-wrap input.personal:focus { outline: none; }
+  .personal-wrap input.personal::placeholder { color: #475569; font-weight: 400; }
+  .personal-wrap .hint-text { flex-shrink: 0; font-size: 11px; color: #64748b; padding-right: 8px; }
+
+  .waiter .info {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 8px;
+    font-size: 13px;
+    padding-top: 10px;
+    border-top: 1px solid #1e293b;
+    margin-top: 12px;
+    flex-wrap: wrap;
+  }
+  .waiter .info .share { color: #94a3b8; white-space: nowrap; }
+  .waiter .info .share b { color: #fbbf24; }
+  .waiter .info .payout { color: #94a3b8; text-align: right; line-height: 1.5; }
+  .waiter .info .payout b { color: #4ade80; }
+  .waiter .info .payout .rounded { color: #94a3b8; font-size: 11px; }
+  .waiter.over .info .payout b { color: #f87171; }
+  .waiter .warning {
+    font-size: 12px;
+    color: #f87171;
+    margin-top: 8px;
+    text-align: right;
+    font-weight: 600;
+  }
+
+  .btn {
+    width: 100%;
+    padding: 12px;
+    border-radius: 10px;
+    border: none;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 8px;
+  }
+  .btn-add { background: #334155; color: #e2e8f0; }
+  .btn-add:active { background: #475569; }
+  .btn-reset { background: #7f1d1d; color: #fecaca; margin-top: 6px; }
+  .btn-reset:active { background: #991b1b; }
+  .final {
+    background: linear-gradient(135deg, #1e40af, #1e3a8a);
+    border-radius: 14px;
+    padding: 16px;
+    margin-top: 14px;
+  }
+  .final .line {
+    display: flex;
+    justify-content: space-between;
+    padding: 6px 0;
+    font-size: 15px;
+  }
+  .final .line.total {
+    font-size: 17px;
+    font-weight: 700;
+    border-top: 1px solid rgba(255,255,255,0.2);
+    padding-top: 10px;
+    margin-top: 6px;
+  }
+  .final .check {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 10px;
+    font-size: 14px;
+    color: #4ade80;
+  }
+  .round-card {
+    background: #1e293b;
+    border-radius: 14px;
+    padding: 14px;
+    margin-top: 14px;
+    border: 1px solid #334155;
+  }
+  .round-card .title {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #94a3b8;
+    margin-bottom: 10px;
+  }
+  .round-card .line {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 0;
+    font-size: 13px;
+    color: #94a3b8;
+  }
+  .round-card .line .v {
+    color: #fbbf24;
+    font-weight: 600;
+  }
+  .round-card .line.total {
+    border-top: 1px solid #334155;
+    margin-top: 6px;
+    padding-top: 8px;
+    font-size: 14px;
+    color: #e2e8f0;
+    font-weight: 600;
+  }
+  .round-card .line.total .v { color: #a855f7; }
+  .payout-card {
+    background: #0f172a;
+    border-radius: 14px;
+    padding: 16px;
+    margin-top: 14px;
+    border: 1px solid #334155;
+  }
+  .payout-card h3 {
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #94a3b8;
+    margin: 0 0 12px;
+  }
+  .payout-section {
+    background: #1e293b;
+    border-radius: 10px;
+    padding: 12px;
+    margin-bottom: 10px;
+  }
+  .payout-section .section-title {
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+  .payout-section.cash .section-title { color: #4ade80; }
+  .payout-section.card .section-title { color: #38bdf8; }
+  .payout-section .pl {
+    display: flex;
+    justify-content: space-between;
+    padding: 4px 0;
+    font-size: 13px;
+    color: #94a3b8;
+    gap: 8px;
+  }
+  .payout-section .pl .v { color: #f1f5f9; font-weight: 600; }
+  .payout-section .pl.total {
+    border-top: 1px solid #334155;
+    margin-top: 6px;
+    padding-top: 8px;
+    font-weight: 600;
+    color: #e2e8f0;
+  }
+  .payout-section .pl.total .v { color: #38bdf8; }
+  .payout-section .pl.highlight .v { color: #4ade80; }
+  .payout-section .pl.return .v { color: #fbbf24; }
+  .payout-section .pl.sub {
+    font-size: 12px;
+    color: #64748b;
+    padding-left: 8px;
+  }
+  .status-ok { color: #4ade80; font-size: 12px; text-align: right; padding-top: 6px; }
+  .status-warn { color: #fbbf24; font-size: 12px; text-align: right; padding-top: 6px; }
+  .status-bad { color: #f87171; font-size: 12px; text-align: right; padding-top: 6px; }
+  .hint {
+    font-size: 12px;
+    color: #64748b;
+    text-align: left;
+    margin-top: 10px;
+  }
+</style>
+</head>
+<body>
+
+<h1>💰 Калькулятор чаевых</h1>
+
+<div class="card">
+  <div class="row">
+    <label>Наличные</label>
+    <input type="number" id="cash" placeholder="0" inputmode="decimal">
+  </div>
+  <div class="row">
+    <label>Карты / QR</label>
+    <input type="number" id="card" placeholder="0" inputmode="decimal">
+  </div>
+
+  <div class="runner-toggle" id="runnerToggle" onclick="toggleRunner()">
+    <div class="switch"></div>
+    <div class="text">
+      Раннер в смене
+      <small>−1000 ₽ из общей кассы</small>
+    </div>
+  </div>
+
+  <div class="runner-toggle on" id="roundToggle" onclick="toggleRound()" style="margin-top:8px;">
+    <div class="switch"></div>
+    <div class="text">
+      Округление до 50 ₽
+      <small>Для официантов, бара и кухни → на посуду</small>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="summary"><span>Общая касса</span><span class="val" id="total">0</span></div>
+  <div class="summary warn" id="runnerRow" style="display:none;"><span>− Раннер</span><span class="val" id="runnerOut">0</span></div>
+  <div class="summary highlight"><span>30% (мен/бар/кух)</span><span class="val" id="thirty">0</span></div>
+  <div class="summary highlight big"><span>70% (официанты + ГМ)</span><span class="val" id="seventy">0</span></div>
+</div>
+
+<div class="card">
+  <h2>30% — Менеджеры, бар, кухня <span class="tag" id="tagThirty"></span></h2>
+
+  <div class="staff-card">
+    <div class="header">
+      <div class="title">Менеджеры<small>Всего 2 доли</small></div>
+      <div class="men-buttons">
+        <button id="men1" onclick="setMen(1)">1</button>
+        <button id="men2" onclick="setMen(2)">2</button>
+      </div>
+    </div>
+    <div class="line">
+      <span class="label">Всего менеджерам</span>
+      <span class="val" id="menTotal">0</span>
+    </div>
+    <div class="line">
+      <span class="label">Каждому</span>
+      <span class="val-pay" id="menEach">0</span>
+    </div>
+  </div>
+
+  <div class="staff-card">
+    <div class="header">
+      <div class="title">Бар<small>Фиксированно ×1.50</small></div>
+    </div>
+    <div class="line">
+      <span class="label">К выплате</span>
+      <span class="val-pay" id="barPay">0</span>
+    </div>
+    <div class="line">
+      <span class="label">Округлено до</span>
+      <span class="val-round" id="barRounded">—</span>
+    </div>
+  </div>
+
+  <div class="staff-card">
+    <div class="header">
+      <div class="title">Кухня<small>Фиксированно ×0.50</small></div>
+    </div>
+    <div class="line">
+      <span class="label">К выплате (до списания)</span>
+      <span class="val-pay" id="kitchenPayRaw">0</span>
+    </div>
+    <div class="kitchen-cut">
+      <label>− Списать с кухни:</label>
+      <input type="number" id="kitchenCut" value="400" inputmode="decimal">
+      <span class="suffix">₽</span>
+    </div>
+    <div class="line minus">
+      <span class="label">Кухня итого</span>
+      <span class="val-pay" id="kitchenPay">0</span>
+    </div>
+    <div class="line">
+      <span class="label">Округлено до</span>
+      <span class="val-round" id="kitchenRounded">—</span>
+    </div>
+  </div>
+
+  <div class="breakdown">
+    <div class="bl"><span>30% (из кассы)</span><span class="v" id="bdThirty">0</span></div>
+    <div class="bl add"><span>+ Списание с кухни</span><span class="v" id="bdAdd">0</span></div>
+    <div class="bl divide"><span>= К распределению</span><span class="v" id="bdTotal">0</span></div>
+    <div class="bl"><span>Доля (÷ 4.0)</span><span class="v" id="bdShare">0</span></div>
+    <div class="bl"><span>Менеджеры ×2.0</span><span class="v" id="bdMen">0</span></div>
+    <div class="bl"><span>Бар ×1.5</span><span class="v" id="bdBar">0</span></div>
+    <div class="bl"><span>Кухня ×0.5</span><span class="v" id="bdKitchen">0</span></div>
+    <div class="bl minus"><span>− Списание с кухни</span><span class="v" id="bdMinus">0</span></div>
+    <div class="bl total"><span>Итого</span><span class="v" id="bdFinal">0</span></div>
+  </div>
+
+  <div class="summary" style="margin-top:12px; padding-top:12px; border-top:1px solid #334155;">
+    <span>Всего долей (30%)</span><span class="val">4.00</span>
+  </div>
+</div>
+
+<div class="card">
+  <h2>70% — Официанты и гост-менеджер <span class="tag" id="tagSeventy"></span></h2>
+  <div id="waiters"></div>
+  <button class="btn btn-add" onclick="addWaiter()">+ Добавить официанта</button>
+  <div class="summary" style="margin-top:14px; padding-top:14px; border-top:1px solid #334155;">
+    <span>Всего долей (70%)</span><span class="val" id="shares">0</span>
+  </div>
+  <div class="hint" style="margin-top:8px;">
+    Авто: доля = часы / 11 (округление до 0.1). 6 ч = 0.5, ГМ = 0.5.
+  </div>
+</div>
+
+<div class="final">
+  <div class="line" id="fRunnerRow" style="display:none;"><span>Раннер</span><span id="fRunner">0</span></div>
+  <div class="line"><span>30% (мен/бар/кух)</span><span id="fThirty">0</span></div>
+  <div class="line"><span>70% официантам</span><span id="fSeventy">0</span></div>
+  <div class="line total"><span>ИТОГО</span><span id="fTotal">0</span></div>
+  <div class="check" id="check"></div>
+</div>
+
+<div class="round-card" id="roundCard" style="display:none;">
+  <div class="title">💰 Округление на посуду</div>
+  <div class="line">
+    <span>Официанты (округлено вниз)</span>
+    <span class="v" id="rWaiters">0</span>
+  </div>
+  <div class="line">
+    <span>Бар</span>
+    <span class="v" id="rBar">0</span>
+  </div>
+  <div class="line">
+    <span>Кухня</span>
+    <span class="v" id="rKitchen">0</span>
+  </div>
+  <div class="line total">
+    <span>Всего на посуду</span>
+    <span class="v" id="rTotal">0</span>
+  </div>
+</div>
+
+<div class="payout-card">
+  <h3>Как выдать</h3>
+
+  <div class="payout-section cash">
+    <div class="section-title">
+      <span>💵 Наличными из кассы</span>
+      <span id="cashHave"></span>
+    </div>
+    <div class="pl"><span>Раннер</span><span class="v" id="pRunner">0</span></div>
+    <div class="pl"><span>Бар</span><span class="v" id="pBar">0</span></div>
+    <div class="pl"><span>Кухня</span><span class="v" id="pKitchen">0</span></div>
+    <div class="pl highlight"><span>Официантам (нал)</span><span class="v" id="pWaitersCash">0</span></div>
+    <div class="pl total"><span>Всего налом</span><span class="v" id="pCashTotal">0</span></div>
+    <div class="status-ok" id="cashStatus"></div>
+  </div>
+
+  <div class="payout-section card">
+    <div class="section-title">
+      <span>💳 Переводом с карты</span>
+      <span id="cardHave"></span>
+    </div>
+    <div class="pl"><span>Менеджеру (себе)</span><span class="v" id="pMen">0</span></div>
+    <div class="pl"><span>Официантам (карта)</span><span class="v" id="pWaitersCard">0</span></div>
+    <div class="pl return" id="pReturnRow" style="display:none;"><span>+ возврат от перебора</span><span class="v" id="pReturn">0</span></div>
+    <div class="pl" id="pCompRow" style="display:none;"><span>В т.ч. компенсация нала</span><span class="v" id="pComp">0</span></div>
+    <div class="pl total"><span>Всего с карты</span><span class="v" id="pCardTotal">0</span></div>
+    <div class="pl sub"><span>Пришло по QR</span><span class="v" id="pCardIn">0</span></div>
+    <div class="pl sub"><span>− уже у официантов</span><span class="v" id="pPersonal">0</span></div>
+    <div class="pl sub"><span>Реально на карте</span><span class="v" id="pCardReal">0</span></div>
+    <div class="status-ok" id="cardStatus"></div>
+  </div>
+</div>
+
+<button class="btn btn-reset" onclick="resetShift()">Сбросить смену</button>
+
+<div class="hint">Данные сохраняются на этом устройстве</div>
+
+<script>
+const STORAGE_KEY = 'tips-v31';
+const STD_SHIFT = 11;
+const RUNNER_SUM = 1000;
+const SHARES_30 = 4.0;
+const MEN_TOTAL = 2.0;
+const ROUND_STEP = 50;
+
+let runnerOn = false;
+let menCount = 2;
+let roundOn = true;
+
+function fmt(n) {
+  return Math.round(n).toLocaleString('ru-RU') + ' \u20BD';
+}
+
+function roundShare(n) {
+  return Math.round(n * 10) / 10;
+}
+
+function roundDown50(n) {
+  return Math.floor(n / ROUND_STEP) * ROUND_STEP;
+}
+
+function toggleRunner() {
+  runnerOn = !runnerOn;
+  document.getElementById('runnerToggle').classList.toggle('on', runnerOn);
+  calc();
+}
+
+function toggleRound() {
+  roundOn = !roundOn;
+  document.getElementById('roundToggle').classList.toggle('on', roundOn);
+  calc();
+}
+
+function setMen(n) {
+  menCount = n;
+  document.getElementById('men1').classList.toggle('active', n === 1);
+  document.getElementById('men2').classList.toggle('active', n === 2);
+  calc();
+}
+
+function addWaiter(data = {}) {
+  const name = data.name || '';
+  const hours = data.hours !== undefined ? data.hours : 11;
+  const isGM = data.isGM || false;
+  const personal = data.personal !== undefined ? data.personal : '';
+  const manual = data.manual || false;
+  const manualShare = data.manualShare !== undefined ? data.manualShare : 1.0;
+  const payType = data.payType || 'auto';
+
+  const div = document.createElement('div');
+  div.className = 'waiter' + (isGM ? ' gm' : '');
+  div.innerHTML = `
+    <div class="top">
+      <input class="name" placeholder="Имя" value="${name}">
+      <button class="btn-remove" onclick="this.closest('.waiter').remove(); calc();">&times;</button>
+    </div>
+
+    <div class="section-label">Как считать долю</div>
+    <div class="mode-row">
+      <div class="segmented mode">
+        <button class="mode-auto ${!manual ? 'active' : ''}" onclick="setMode(this, false)">Авто</button>
+        <button class="mode-manual ${manual ? 'active' : ''}" onclick="setMode(this, true)">Вручную</button>
+      </div>
+      <label class="fixgm">
+        <input type="checkbox" class="gmcheck" ${isGM ? 'checked' : ''}>
+        <span>ГМ 0.5</span>
+      </label>
+    </div>
+
+    <div class="section-label row-auto-label">Отработанные часы</div>
+    <div class="row-auto" style="display:${manual ? 'none' : 'block'};">
+      <div class="hours-wrap">
+        <div class="icon">🕐</div>
+        <input class="hours" type="number" step="0.5" value="${hours}" inputmode="decimal" placeholder="Часы">
+        <div class="hint-text">ч</div>
+      </div>
+      <div class="preset-row">
+        <button class="preset-mini" onclick="setHours(this, 11)">11 ч</button>
+        <button class="preset-mini" onclick="setHours(this, 12)">12 ч</button>
+        <button class="preset-mini" onclick="setHours(this, 6)">6 ч</button>
+        <button class="preset-mini" onclick="setHours(this, 13)">13 ч</button>
+      </div>
+    </div>
+
+    <div class="section-label row-manual-label" style="display:${manual ? 'block' : 'none'};">Своя доля</div>
+    <div class="row-manual" style="display:${manual ? 'block' : 'none'};">
+      <div class="share-wrap">
+        <div class="icon">⭐</div>
+        <input class="manual-share" type="number" step="0.1" value="${manualShare}" inputmode="decimal" placeholder="Доля">
+        <div class="hint-text">×</div>
+      </div>
+    </div>
+
+    <div class="section-label">Уже получил лично на карту</div>
+    <div class="personal-wrap">
+      <div class="icon">💳</div>
+      <input class="personal" type="number" placeholder="0" value="${personal}" inputmode="decimal">
+      <div class="hint-text">₽</div>
+    </div>
+
+    <div class="section-label">Как выдать</div>
+    <div class="segmented pay">
+      <button class="pay-auto ${payType === 'auto' ? 'active' : ''}" data-type="auto" onclick="setPayType(this, 'auto')">Авто</button>
+      <button class="pay-cash ${payType === 'cash' ? 'active' : ''}" data-type="cash" onclick="setPayType(this, 'cash')">Нал</button>
+      <button class="pay-card ${payType === 'card' ? 'active' : ''}" data-type="card" onclick="setPayType(this, 'card')">Карта</button>
+    </div>
+
+    <div class="info">
+      <span class="share">доля: <b>1.0</b></span>
+      <span class="payout">оплата: <b>0</b></span>
+    </div>
+    <div class="warning" style="display:none;"></div>
+  `;
+  document.getElementById('waiters').appendChild(div);
+
+  div.querySelector('.name').addEventListener('input', calc);
+  div.querySelector('.hours').addEventListener('input', calc);
+  div.querySelector('.manual-share').addEventListener('input', calc);
+  div.querySelector('.gmcheck').addEventListener('change', (e) => {
+    div.classList.toggle('gm', e.target.checked);
+    calc();
+  });
+  div.querySelector('.personal').addEventListener('input', calc);
+  calc();
+}
+
+function setMode(btn, isManual) {
+  const w = btn.closest('.waiter');
+  w.querySelector('.mode-auto').classList.toggle('active', !isManual);
+  w.querySelector('.mode-manual').classList.toggle('active', isManual);
+  w.querySelector('.row-auto').style.display = isManual ? 'none' : 'block';
+  w.querySelector('.row-manual').style.display = isManual ? 'block' : 'none';
+  w.querySelector('.row-auto-label').style.display = isManual ? 'none' : 'block';
+  w.querySelector('.row-manual-label').style.display = isManual ? 'block' : 'none';
+  calc();
+}
+
+function setPayType(btn, type) {
+  const w = btn.closest('.waiter');
+  w.querySelectorAll('.segmented.pay button').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  calc();
+}
+
+function setHours(btn, h) {
+  const w = btn.closest('.waiter');
+  w.querySelector('.hours').value = h;
+  calc();
+}
+
+function getWaiters() {
+  return [...document.querySelectorAll('#waiters .waiter')].map(w => {
+    let payType = 'auto';
+    if (w.querySelector('.pay-cash').classList.contains('active')) payType = 'cash';
+    if (w.querySelector('.pay-card').classList.contains('active')) payType = 'card';
+    return {
+      name: w.querySelector('.name').value,
+      hours: parseFloat(w.querySelector('.hours').value) || 0,
+      isGM: w.querySelector('.gmcheck').checked,
+      personal: parseFloat(w.querySelector('.personal').value) || 0,
+      isManual: w.querySelector('.mode-manual').classList.contains('active'),
+      manualShare: parseFloat(w.querySelector('.manual-share').value) || 0,
+      payType: payType,
+      el: w
+    };
+  });
+}
+
+function calc() {
+  const cash = parseFloat(document.getElementById('cash').value) || 0;
+  const card = parseFloat(document.getElementById('card').value) || 0;
+  const kitchenCut = parseFloat(document.getElementById('kitchenCut').value) || 0;
+
+  const total = cash + card;
+  const runnerCut = runnerOn ? RUNNER_SUM : 0;
+  const afterRunner = Math.max(0, total - runnerCut);
+  const thirty = afterRunner * 0.3;
+  const seventy = afterRunner * 0.7;
+
+  document.getElementById('total').textContent = fmt(total);
+  document.getElementById('runnerRow').style.display = runnerOn ? 'flex' : 'none';
+  document.getElementById('fRunnerRow').style.display = runnerOn ? 'flex' : 'none';
+  document.getElementById('runnerOut').textContent = '− ' + fmt(runnerCut);
+  document.getElementById('thirty').textContent = fmt(thirty);
+  document.getElementById('seventy').textContent = fmt(seventy);
+
+  const thirtyPlus = thirty + kitchenCut;
+  const price30 = thirtyPlus / SHARES_30;
+
+  const menTotalPay = price30 * MEN_TOTAL;
+  const menEachPay = menTotalPay / menCount;
+  document.getElementById('menTotal').textContent = fmt(menTotalPay);
+  document.getElementById('menEach').textContent = fmt(menEachPay) + ' ×' + menCount;
+
+  const barPay = price30 * 1.5;
+  const kitchenPayRaw = price30 * 0.5;
+  const kitchenPay = Math.max(0, kitchenPayRaw - kitchenCut);
+
+  document.getElementById('barPay').textContent = fmt(barPay);
+  document.getElementById('kitchenPayRaw').textContent = fmt(kitchenPayRaw);
+  document.getElementById('kitchenPay').textContent = fmt(kitchenPay);
+
+  // Блок наглядного расчёта
+  document.getElementById('bdThirty').textContent = fmt(thirty);
+  document.getElementById('bdAdd').textContent = '+ ' + fmt(kitchenCut);
+  document.getElementById('bdTotal').textContent = fmt(thirtyPlus);
+  document.getElementById('bdShare').textContent = fmt(price30);
+  document.getElementById('bdMen').textContent = fmt(menTotalPay);
+  document.getElementById('bdBar').textContent = fmt(barPay);
+  document.getElementById('bdKitchen').textContent = fmt(kitchenPayRaw);
+  document.getElementById('bdMinus').textContent = '− ' + fmt(kitchenCut);
+  document.getElementById('bdFinal').textContent = fmt(menTotalPay + barPay + kitchenPay);
+
+  // Округление
+  let barRound = barPay, kitchenRound = kitchenPay;
+  let barRoundLoss = 0, kitchenRoundLoss = 0;
+  if (roundOn) {
+    barRound = roundDown50(barPay);
+    kitchenRound = roundDown50(kitchenPay);
+    barRoundLoss = barPay - barRound;
+    kitchenRoundLoss = kitchenPay - kitchenRound;
+  }
+
+  if (roundOn) {
+    document.getElementById('barRounded').textContent = fmt(barRound) + ' (−' + fmt(barRoundLoss) + ')';
+    document.getElementById('kitchenRounded').textContent = fmt(kitchenRound) + ' (−' + fmt(kitchenRoundLoss) + ')';
+  } else {
+    document.getElementById('barRounded').textContent = '—';
+    document.getElementById('kitchenRounded').textContent = '—';
+  }
+
+  document.getElementById('tagThirty').textContent = 'доля = ' + fmt(price30);
+
+  const waiters = getWaiters();
+
+  waiters.forEach(w => {
+    if (w.isManual) {
+      w.share = roundShare(w.manualShare);
+    } else if (w.isGM) {
+      w.share = 0.5;
+    } else if (w.hours === 6) {
+      w.share = 0.5;
+    } else {
+      w.share = roundShare(w.hours / STD_SHIFT);
+    }
+  });
+
+  const totalShares = waiters.reduce((s, w) => s + w.share, 0);
+  const perShare = totalShares > 0 ? seventy / totalShares : 0;
+
+  let totalWaitersPayout = 0;
+  let totalPersonal = 0;
+  let totalOver = 0;
+  let waitersRoundLoss = 0;
+
+  waiters.forEach(w => {
+    w.pay = perShare * w.share;
+    if (roundOn && !w.isGM) {
+      w.payRounded = roundDown50(w.pay);
+      waitersRoundLoss += w.pay - w.payRounded;
+    } else {
+      w.payRounded = w.pay;
+    }
+    w.needFromSources = Math.max(0, w.payRounded - w.personal);
+    w.over = Math.max(0, w.personal - w.payRounded);
+    totalWaitersPayout += w.payRounded;
+    totalPersonal += w.personal;
+    totalOver += w.over;
+  });
+
+  const cardReal = Math.max(0, card - totalPersonal);
+  const staffCashNeed = runnerCut + barRound + kitchenRound;
+  const cashForStaff = Math.min(staffCashNeed, cash);
+  const cashLeftAfterStaff = Math.max(0, cash - cashForStaff);
+  const staffCashShortage = Math.max(0, staffCashNeed - cash);
+
+  let cashLeft = cashLeftAfterStaff;
+
+  waiters.forEach(w => {
+    if (w.payType === 'cash') {
+      const give = Math.min(w.needFromSources, cashLeft);
+      w.fromCash = give;
+      w.fromCard = w.needFromSources - give;
+      cashLeft -= give;
+    } else {
+      w.fromCash = 0;
+      w.fromCard = 0;
+    }
+  });
+
+  waiters.forEach(w => {
+    if (w.payType === 'auto') {
+      const give = Math.min(w.needFromSources, cashLeft);
+      w.fromCash = give;
+      w.fromCard = w.needFromSources - give;
+      cashLeft -= give;
+    }
+  });
+
+  waiters.forEach(w => {
+    if (w.payType === 'card') {
+      w.fromCash = 0;
+      w.fromCard = w.needFromSources;
+    }
+  });
+
+  let totalWaitersCash = 0;
+  let totalWaitersCard = 0;
+
+  waiters.forEach(w => {
+    totalWaitersCash += w.fromCash;
+    totalWaitersCard += w.fromCard;
+
+    w.el.querySelector('.share b').textContent = w.share.toFixed(1);
+    const payoutEl = w.el.querySelector('.payout');
+
+    if (w.over > 0) {
+      w.el.classList.add('over');
+      const warn = w.el.querySelector('.warning');
+      warn.style.display = 'block';
+      warn.textContent = '⚠ Перебрал ' + fmt(w.over) + ' — вернуть в котёл';
+      payoutEl.innerHTML = 'причитается: <b>' + fmt(w.payRounded) + '</b><br>уже на карте: <b>' + fmt(w.personal) + '</b>';
+    } else if (w.needFromSources === 0 && w.personal > 0) {
+      w.el.classList.remove('over');
+      w.el.querySelector('.warning').style.display = 'none';
+      payoutEl.innerHTML = 'причитается: <b>' + fmt(w.payRounded) + '</b><br>всё уже на карте';
+    } else {
+      w.el.classList.remove('over');
+      w.el.querySelector('.warning').style.display = 'none';
+      let detail = 'причитается: <b>' + fmt(w.payRounded) + '</b>';
+      if (w.personal > 0) {
+        detail += '<br>уже на карте: <b>' + fmt(w.personal) + '</b>';
+      }
+      detail += '<br>налом: <b>' + fmt(w.fromCash) + '</b> / карта: <b>' + fmt(w.fromCard) + '</b>';
+      if (roundOn && !w.isGM && w.pay > w.payRounded) {
+        detail += '<br><span class="rounded">округлено вниз на ' + fmt(w.pay - w.payRounded) + '</span>';
+      }
+      payoutEl.innerHTML = detail;
+    }
+  });
+
+  document.getElementById('shares').textContent = totalShares.toFixed(1);
+  document.getElementById('tagSeventy').textContent = totalShares > 0 ? 'доля = ' + fmt(perShare) : '';
+
+  document.getElementById('fRunner').textContent = fmt(runnerCut);
+  document.getElementById('fThirty').textContent = fmt(thirty);
+  document.getElementById('fSeventy').textContent = fmt(seventy);
+  document.getElementById('fTotal').textContent = fmt(runnerCut + thirty + seventy);
+
+  const sumCheck = runnerCut + thirty + seventy;
+  const check = document.getElementById('check');
+  if (total > 0 && Math.abs(sumCheck - total) < 1) {
+    check.textContent = '✓ Всё сходится';
+    check.style.color = '#4ade80';
+  } else if (total > 0) {
+    check.textContent = '⚠ Разница: ' + fmt(total - sumCheck);
+    check.style.color = '#f87171';
+  } else {
+    check.textContent = '';
+  }
+
+  const roundCard = document.getElementById('roundCard');
+  if (roundOn) {
+    roundCard.style.display = 'block';
+    document.getElementById('rWaiters').textContent = '−' + fmt(waitersRoundLoss);
+    document.getElementById('rBar').textContent = '−' + fmt(barRoundLoss);
+    document.getElementById('rKitchen').textContent = '−' + fmt(kitchenRoundLoss);
+    document.getElementById('rTotal').textContent = fmt(waitersRoundLoss + barRoundLoss + kitchenRoundLoss);
+  } else {
+    roundCard.style.display = 'none';
+  }
+
+  document.getElementById('pRunner').textContent = fmt(runnerCut);
+  document.getElementById('pBar').textContent = fmt(barRound);
+  document.getElementById('pKitchen').textContent = fmt(kitchenRound);
+  document.getElementById('pWaitersCash').textContent = fmt(totalWaitersCash);
+
+  const totalCashOut = cashForStaff + totalWaitersCash;
+  document.getElementById('pCashTotal').textContent = fmt(totalCashOut);
+  document.getElementById('cashHave').textContent = 'в кассе ' + fmt(cash);
+
+  const cashStatus = document.getElementById('cashStatus');
+  if (staffCashShortage > 0) {
+    cashStatus.textContent = '⚠ Не хватает ' + fmt(staffCashShortage) + ' — компенсируется переводом';
+    cashStatus.className = 'status-warn';
+  } else if (cash > 0) {
+    cashStatus.textContent = '✓ Хватает (' + fmt(cash - totalCashOut) + ' остаётся)';
+    cashStatus.className = 'status-ok';
+  } else {
+    cashStatus.textContent = '';
+  }
+
+  const totalFromCard = totalWaitersCard + menTotalPay + staffCashShortage + totalOver;
+
+  document.getElementById('pMen').textContent = fmt(menTotalPay);
+  document.getElementById('pWaitersCard').textContent = fmt(totalWaitersCard);
+  document.getElementById('pCardTotal').textContent = fmt(totalFromCard);
+  document.getElementById('pCardIn').textContent = fmt(card);
+  document.getElementById('pPersonal').textContent = '− ' + fmt(totalPersonal);
+  document.getElementById('pCardReal').textContent = fmt(cardReal);
+  document.getElementById('cardHave').textContent = 'на карте ' + fmt(cardReal);
+
+  const returnRow = document.getElementById('pReturnRow');
+  if (totalOver > 0) {
+    returnRow.style.display = 'flex';
+    document.getElementById('pReturn').textContent = fmt(totalOver);
+  } else {
+    returnRow.style.display = 'none';
+  }
+
+  const compRow = document.getElementById('pCompRow');
+  if (staffCashShortage > 0) {
+    compRow.style.display = 'flex';
+    document.getElementById('pComp').textContent = fmt(staffCashShortage);
+  } else {
+    compRow.style.display = 'none';
+  }
+
+  const cardStatus = document.getElementById('cardStatus');
+  if (totalFromCard > cardReal) {
+    cardStatus.textContent = '⚠ Не хватает ' + fmt(totalFromCard - cardReal);
+    cardStatus.className = 'status-bad';
+  } else if (cardReal > 0) {
+    cardStatus.textContent = '✓ Хватает (' + fmt(cardReal - totalFromCard) + ' остаётся)';
+    cardStatus.className = 'status-ok';
+  } else {
+    cardStatus.textContent = '';
+  }
+
+  save();
+}
+
+function resetShift() {
+  if (!confirm('Сбросить смену? Все данные будут удалены.')) return;
+  localStorage.removeItem(STORAGE_KEY);
+  document.getElementById('cash').value = '';
+  document.getElementById('card').value = '';
+  document.getElementById('kitchenCut').value = '400';
+  runnerOn = false;
+  roundOn = true;
+  document.getElementById('runnerToggle').classList.remove('on');
+  document.getElementById('roundToggle').classList.add('on');
+  document.getElementById('waiters').innerHTML = '';
+  setMen(2);
+  addDefaultWaiters();
+  calc();
+}
+
+function addDefaultWaiters() {
+  addWaiter({ name: 'Официант 1', hours: 11 });
+  addWaiter({ name: 'Официант 2', hours: 11 });
+  addWaiter({ name: 'Официант 3', hours: 11 });
+  addWaiter({ name: 'Официант 4', hours: 11 });
+  addWaiter({ name: 'Официант 5', hours: 11 });
+  addWaiter({ name: 'Вечерний', hours: 6 });
+  addWaiter({ name: 'Гост-менеджер', hours: 11, isGM: true });
+}
+
+function save() {
+  const data = {
+    cash: document.getElementById('cash').value,
+    card: document.getElementById('card').value,
+    kitchenCut: document.getElementById('kitchenCut').value,
+    runnerOn: runnerOn,
+    menCount: menCount,
+    roundOn: roundOn,
+    waiters: getWaiters().map(w => ({
+      name: w.name,
+      hours: w.hours,
+      isGM: w.isGM,
+      personal: w.personal,
+      manual: w.isManual,
+      manualShare: w.manualShare,
+      payType: w.payType
+    }))
+  };
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+}
+
+function load() {
+  try {
+    const data = JSON.parse(localStorage.getItem(STORAGE_KEY));
+    if (data) {
+      document.getElementById('cash').value = data.cash || '';
+      document.getElementById('card').value = data.card || '';
+      document.getElementById('kitchenCut').value = data.kitchenCut || '400';
+      runnerOn = data.runnerOn || false;
+      menCount = data.menCount || 2;
+      roundOn = data.roundOn !== undefined ? data.roundOn : true;
+      document.getElementById('runnerToggle').classList.toggle('on', runnerOn);
+      document.getElementById('roundToggle').classList.toggle('on', roundOn);
+      document.getElementById('men1').classList.toggle('active', menCount === 1);
+      document.getElementById('men2').classList.toggle('active', menCount === 2);
+      (data.waiters || []).forEach(w => addWaiter(w));
+      return;
+    }
+  } catch(e) {}
+  setMen(2);
+  addDefaultWaiters();
+}
+
+['cash','card','kitchenCut'].forEach(id => {
+  document.getElementById(id).addEventListener('input', calc);
+});
+
+load();
+calc();
+</script>
+</body>
+</html>
