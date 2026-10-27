@@ -15,612 +15,204 @@
     padding-bottom: 40px;
     max-width: 520px;
     overflow-x: hidden;
+    font-size: 14px;
   }
-  h1 { font-size: 20px; text-align: center; margin: 8px 0 20px; color: #f1f5f9; }
+  
   .card {
     background: #1e293b;
-    border-radius: 14px;
-    padding: 14px;
-    margin-bottom: 14px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+    border-radius: 12px;
+    padding: 12px 14px;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
   }
-  .row { display: flex; gap: 10px; margin-bottom: 12px; align-items: center; }
-  .row label { flex: 0 0 100px; font-size: 14px; color: #94a3b8; }
+  .row { display: flex; gap: 10px; margin-bottom: 10px; align-items: center; }
+  .row:last-child { margin-bottom: 0; }
+  .row label { flex: 0 0 100px; font-size: 13px; color: #94a3b8; }
   .row input {
-    flex: 1;
-    background: #0f172a;
-    border: 1px solid #334155;
-    color: #f1f5f9;
-    border-radius: 8px;
-    padding: 10px 12px;
-    font-size: 16px;
-    width: 100%;
-    min-width: 0;
+    flex: 1; background: #0f172a; border: 1px solid #334155; color: #f1f5f9;
+    border-radius: 8px; padding: 8px 12px; font-size: 15px; width: 100%; min-width: 0;
   }
   .row input:focus { outline: none; border-color: #38bdf8; }
+  
   .runner-toggle {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    background: #0f172a;
-    border: 1px solid #334155;
-    border-radius: 10px;
-    padding: 12px;
-    cursor: pointer;
-    user-select: none;
-    margin-top: 4px;
+    display: flex; align-items: center; gap: 10px; background: #0f172a;
+    border: 1px solid #334155; border-radius: 8px; padding: 8px 10px; cursor: pointer; user-select: none; flex: 1;
   }
   .runner-toggle.on { border-color: #38bdf8; background: #0c2338; }
   .runner-toggle .switch {
-    width: 44px; height: 24px;
-    background: #475569;
-    border-radius: 12px;
-    position: relative;
-    transition: background 0.2s;
-    flex-shrink: 0;
+    width: 36px; height: 20px; background: #475569; border-radius: 10px; position: relative; transition: background 0.2s; flex-shrink: 0;
   }
   .runner-toggle.on .switch { background: #38bdf8; }
   .runner-toggle .switch::after {
-    content: '';
-    position: absolute;
-    top: 2px; left: 2px;
-    width: 20px; height: 20px;
-    background: white;
-    border-radius: 50%;
-    transition: transform 0.2s;
+    content: ''; position: absolute; top: 2px; left: 2px; width: 16px; height: 16px;
+    background: white; border-radius: 50%; transition: transform 0.2s;
   }
-  .runner-toggle.on .switch::after { transform: translateX(20px); }
-  .runner-toggle .text { flex: 1; font-size: 14px; color: #e2e8f0; min-width: 0; }
-  .runner-toggle .text small { display: block; color: #64748b; font-size: 12px; margin-top: 2px; }
-  .summary {
-    display: flex;
-    justify-content: space-between;
-    padding: 8px 0;
-    font-size: 15px;
-    border-bottom: 1px dashed #334155;
-  }
-  .summary:last-child { border-bottom: none; }
-  .summary .val { font-weight: 600; color: #f1f5f9; }
-  .summary.highlight .val { color: #38bdf8; }
-  .summary.warn .val { color: #fbbf24; }
-  .summary.big { font-size: 17px; padding-top: 12px; }
-  h2 {
-    font-size: 13px;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: #94a3b8;
-    margin: 0 0 12px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 4px;
-  }
-  h2 .tag {
-    font-size: 11px;
-    color: #64748b;
-    text-transform: none;
-    letter-spacing: 0;
-  }
-  .staff-card {
-    background: #0f172a;
-    border: 1px solid #334155;
-    border-radius: 10px;
-    padding: 12px;
-    margin-bottom: 8px;
-  }
-  .staff-card .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10px;
-    gap: 8px;
-    flex-wrap: wrap;
-  }
-  .staff-card .title { font-size: 14px; color: #e2e8f0; font-weight: 600; }
-  .staff-card .title small { color: #64748b; font-size: 12px; font-weight: 400; display: block; margin-top: 2px; }
-  .staff-card .men-buttons { display: flex; gap: 6px; }
-  .staff-card .men-buttons button {
-    background: #1e293b;
-    border: 1px solid #334155;
-    color: #94a3b8;
-    border-radius: 8px;
-    width: 40px; height: 34px;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-  }
-  .staff-card .men-buttons button:active { background: #334155; }
-  .staff-card .men-buttons button.active { background: #38bdf8; color: #0f172a; border-color: #38bdf8; }
-  .staff-card .line {
-    display: flex;
-    justify-content: space-between;
-    padding: 5px 0;
-    font-size: 13px;
-    color: #94a3b8;
-    gap: 8px;
-    flex-wrap: wrap;
-  }
-  .staff-card .line .label { color: #94a3b8; }
-  .staff-card .line .val { color: #fbbf24; font-weight: 600; }
-  .staff-card .line .val-pay { color: #4ade80; font-weight: 600; }
-  .staff-card .line .val-round { color: #94a3b8; font-weight: 400; font-size: 12px; }
-  .staff-card .line.minus .val-pay { color: #f87171; }
+  .runner-toggle.on .switch::after { transform: translateX(16px); }
+  .runner-toggle .text { flex: 1; font-size: 13px; color: #e2e8f0; min-width: 0; }
 
-  /* Блок наглядного расчёта 30% */
-  .breakdown {
-    background: #1e293b;
-    border: 1px solid #334155;
-    border-radius: 10px;
-    padding: 10px 12px;
-    margin-top: 10px;
-    font-size: 12px;
-  }
-  .breakdown .bl {
-    display: flex;
-    justify-content: space-between;
-    padding: 3px 0;
-    color: #94a3b8;
-    gap: 8px;
-  }
-  .breakdown .bl .v { color: #e2e8f0; font-weight: 600; }
-  .breakdown .bl.add .v { color: #4ade80; }
-  .breakdown .bl.divide {
-    border-top: 1px dashed #334155;
-    margin-top: 5px;
-    padding-top: 6px;
-    font-weight: 600;
-    color: #38bdf8;
-  }
-  .breakdown .bl.divide .v { color: #38bdf8; }
-  .breakdown .bl.minus .v { color: #f87171; }
-  .breakdown .bl.total {
-    border-top: 1px solid #334155;
-    margin-top: 6px;
-    padding-top: 6px;
-    font-weight: 600;
-    color: #e2e8f0;
-  }
-  .breakdown .bl.total .v { color: #38bdf8; }
+  /* Сводка */
+  .summary-box { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
+  .summary-item { background: #1e293b; padding: 10px; border-radius: 10px; text-align: center; }
+  .summary-item .lbl { font-size: 11px; color: #94a3b8; text-transform: uppercase; margin-bottom: 4px; }
+  .summary-item .val { font-size: 18px; font-weight: 700; color: #38bdf8; }
 
-  .kitchen-cut {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    background: #1e293b;
-    border: 1px solid #334155;
-    border-radius: 8px;
-    padding: 8px 10px;
-    margin-top: 8px;
+  /* Блок перевода */
+  .transfer-accent {
+    background: linear-gradient(135deg, #1e40af, #3b82f6);
+    border-radius: 12px; padding: 14px; margin-top: 14px; margin-bottom: 14px;
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
   }
-  .kitchen-cut label {
-    flex: 0 0 auto;
-    font-size: 12px;
-    color: #94a3b8;
+  .transfer-accent .title { font-size: 12px; color: #bfdbfe; text-transform: uppercase; margin-bottom: 4px; }
+  .transfer-accent .amount { font-size: 26px; font-weight: 800; color: #ffffff; line-height: 1.2; }
+  .transfer-math {
+    margin-top: 10px; padding-top: 10px; border-top: 1px dashed rgba(255,255,255,0.3);
+    font-size: 12px; color: #bfdbfe; line-height: 1.5;
   }
-  .kitchen-cut input {
-    flex: 1;
-    background: transparent;
-    border: none;
-    color: #f87171;
-    font-size: 15px;
-    font-weight: 700;
-    padding: 4px 0;
-    min-width: 0;
-    text-align: right;
+  .transfer-math div { display: flex; justify-content: space-between; margin-bottom: 2px; }
+  .transfer-math .lbl { color: #bfdbfe; }
+  .transfer-math .val { color: #fff; font-weight: 600; }
+  .transfer-math .total-line { border-top: 1px solid rgba(255,255,255,0.3); margin-top: 4px; padding-top: 4px; font-size: 13px; }
+
+  /* Секции */
+  .section-title {
+    font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px;
+    color: #94a3b8; margin: 14px 0 8px; display: flex; justify-content: space-between;
   }
+  .section-title .tag { font-size: 11px; color: #64748b; text-transform: none; }
+
+  /* Карточки 30% */
+  .staff-card { background: #1e293b; border: 1px solid #334155; border-radius: 10px; padding: 10px; margin-bottom: 6px; }
+  .staff-card .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+  .staff-card .title { font-size: 13px; font-weight: 600; color: #e2e8f0; }
+  .staff-card .line { display: flex; justify-content: space-between; font-size: 13px; padding: 2px 0; color: #94a3b8; }
+  .staff-card .line .val { color: #4ade80; font-weight: 600; }
+  
+  /* Красивый переключатель менеджеров */
+  .men-toggle {
+    display: flex; background: #0f172a; border-radius: 6px; padding: 2px; border: 1px solid #334155;
+  }
+  .men-toggle button {
+    background: transparent; border: none; color: #64748b;
+    padding: 4px 12px; font-size: 12px; font-weight: 600; border-radius: 4px; cursor: pointer;
+  }
+  .men-toggle button.active { background: #38bdf8; color: #0f172a; }
+
+  .kitchen-cut { display: flex; align-items: center; gap: 6px; background: #0f172a; border: 1px solid #334155; border-radius: 6px; padding: 4px 8px; margin-top: 4px; }
+  .kitchen-cut label { font-size: 11px; color: #94a3b8; white-space: nowrap; }
+  .kitchen-cut input { flex: 1; background: transparent; border: none; color: #f87171; font-size: 14px; font-weight: 700; text-align: right; min-width: 0; padding: 0; }
   .kitchen-cut input:focus { outline: none; }
-  .kitchen-cut .suffix { font-size: 12px; color: #64748b; flex-shrink: 0; }
 
-  .waiter {
-    background: #0f172a;
-    border: 1px solid #334155;
-    border-radius: 10px;
-    padding: 12px;
-    margin-bottom: 10px;
-    overflow: hidden;
-    width: 100%;
-  }
-  .waiter.over { border-color: #ef4444; background: #2a0e0e; }
-  .waiter.gm { border-color: #a855f7; background: #1a0f2e; }
-  .waiter.over.gm { border-color: #ef4444; background: #2a0e0e; }
-
-  .waiter .top {
-    display: flex;
-    gap: 8px;
-    align-items: center;
-    margin-bottom: 10px;
-  }
-  .waiter input.name {
-    flex: 1;
-    background: transparent;
-    border: none;
-    border-bottom: 1px dashed #334155;
-    color: #f1f5f9;
-    font-size: 15px;
-    font-weight: 600;
-    padding: 4px 0;
-    min-width: 0;
-    width: 100%;
-  }
-  .waiter input.name:focus { outline: none; border-color: #38bdf8; }
-  .waiter .btn-remove {
-    background: transparent;
-    border: 1px solid #475569;
-    color: #94a3b8;
-    border-radius: 8px;
-    width: 32px; height: 32px;
-    font-size: 16px;
-    cursor: pointer;
-    flex-shrink: 0;
-  }
-  .waiter .btn-remove:active { background: #334155; }
-
-  .section-label {
-    font-size: 11px;
-    color: #64748b;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    margin-bottom: 6px;
-    margin-top: 12px;
-  }
-  .section-label:first-child { margin-top: 0; }
-
-  .segmented {
-    display: flex;
-    gap: 0;
-    background: #1e293b;
-    border-radius: 6px;
-    padding: 2px;
-    width: 100%;
-    min-width: 0;
-  }
-  .segmented button {
-    flex: 1 1 0;
-    background: transparent;
-    border: none;
-    color: #64748b;
-    padding: 8px 4px;
-    font-size: 12px;
-    font-weight: 600;
-    cursor: pointer;
-    border-radius: 4px;
-    min-width: 0;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
+  /* Карточки официантов */
+  .waiter-card { background: #1e293b; border: 1px solid #334155; border-radius: 10px; padding: 10px; margin-bottom: 8px; }
+  .waiter-card.over { border-color: #ef4444; }
+  .waiter-card.gm { border-color: #a855f7; }
+  
+  .waiter-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; gap: 8px; }
+  .waiter-top input.name { flex: 1; background: transparent; border: none; border-bottom: 1px dashed #475569; color: #f1f5f9; font-size: 14px; font-weight: 600; padding: 2px 0; min-width: 0; }
+  .waiter-top input.name:focus { outline: none; border-color: #38bdf8; }
+  .btn-remove { background: #2a0e0e; border: 1px solid #7f1d1d; color: #f87171; border-radius: 6px; width: 28px; height: 28px; font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+  
+  .waiter-controls { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 8px; }
+  .segmented { display: flex; background: #0f172a; border-radius: 6px; padding: 2px; border: 1px solid #334155; flex: 1; min-width: 120px; }
+  .segmented button { flex: 1; background: transparent; border: none; color: #64748b; padding: 6px; font-size: 11px; font-weight: 600; border-radius: 4px; cursor: pointer; }
   .segmented button.active { background: #38bdf8; color: #0f172a; }
-  .segmented.pay button.active[data-type="cash"] { background: #4ade80; color: #0f172a; }
-  .segmented.pay button.active[data-type="card"] { background: #38bdf8; color: #0f172a; }
-  .segmented.pay button.active[data-type="auto"] { background: #a855f7; color: #0f172a; }
+  .fixgm { display: flex; align-items: center; gap: 4px; font-size: 11px; color: #94a3b8; background: #0f172a; border: 1px solid #334155; padding: 0 8px; border-radius: 6px; cursor: pointer; height: 32px; }
 
-  .mode-row {
-    display: flex;
-    gap: 6px;
-    align-items: stretch;
-    width: 100%;
-  }
-  .mode-row .segmented { flex: 1 1 auto; min-width: 0; }
-  .mode-row .fixgm {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 4px;
-    font-size: 11px;
-    color: #94a3b8;
-    cursor: pointer;
-    white-space: nowrap;
-    background: #1e293b;
-    padding: 8px 8px;
-    border-radius: 6px;
-    flex: 0 0 auto;
-  }
-  .mode-row .fixgm input { margin: 0; }
+  .waiter-inputs { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px; }
+  .inp-group { display: flex; flex-direction: column; gap: 2px; }
+  .inp-group label { font-size: 10px; color: #64748b; text-transform: uppercase; }
+  .inp-group input { background: #0f172a; border: 1px solid #334155; color: #f1f5f9; border-radius: 6px; padding: 6px 8px; font-size: 13px; font-weight: 600; min-width: 0; width: 100%; }
+  .inp-group input:focus { outline: none; border-color: #38bdf8; }
 
-  .hours-wrap {
-    display: inline-flex;
-    gap: 6px;
-    align-items: center;
-    background: #1e293b;
-    border: 1px solid #334155;
-    border-radius: 8px;
-    padding: 4px;
-    transition: border-color 0.15s;
-    width: auto;
-    max-width: 160px;
-  }
-  .hours-wrap:focus-within { border-color: #38bdf8; }
-  .hours-wrap .icon {
-    flex-shrink: 0;
-    width: 28px; height: 28px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #38bdf8;
-    font-size: 15px;
-  }
-  .hours-wrap input.hours {
-    flex: 1;
-    background: transparent;
-    border: none;
-    color: #f1f5f9;
-    font-size: 15px;
-    font-weight: 600;
-    padding: 4px 0;
-    min-width: 0;
-    width: 50px;
-    text-align: left;
-  }
-  .hours-wrap input.hours:focus { outline: none; }
-  .hours-wrap input.hours::placeholder { color: #475569; font-weight: 400; }
-  .hours-wrap .hint-text { flex-shrink: 0; font-size: 11px; color: #64748b; padding-right: 8px; }
+  .waiter-bottom { display: flex; justify-content: space-between; align-items: center; border-top: 1px dashed #334155; padding-top: 6px; margin-top: 6px; }
+  .w-info { font-size: 12px; color: #94a3b8; }
+  .w-info b { color: #fbbf24; }
+  .w-pay { text-align: right; font-size: 12px; color: #94a3b8; }
+  .w-pay b { color: #4ade80; font-size: 14px; }
 
-  .share-wrap {
-    display: inline-flex;
-    gap: 6px;
-    align-items: center;
-    background: #1e293b;
-    border: 1px solid #334155;
-    border-radius: 8px;
-    padding: 4px;
-    transition: border-color 0.15s;
-    width: auto;
-    max-width: 160px;
+  /* Итоговая таблица */
+  .final-table { background: #1e293b; border-radius: 12px; padding: 12px; margin-top: 14px; border: 1px solid #334155; }
+  .final-table .title { font-size: 13px; text-transform: uppercase; color: #94a3b8; margin-bottom: 8px; text-align: center; font-weight: 600; }
+  .f-row { 
+    display: grid; grid-template-columns: 1fr 60px 60px 80px; gap: 4px; align-items: center; padding: 8px 4px; 
+    border-bottom: 1px solid #0f172a; font-size: 12px; cursor: pointer; transition: all 0.2s; border-radius: 6px;
+    user-select: none;
   }
-  .share-wrap:focus-within { border-color: #38bdf8; }
-  .share-wrap .icon {
-    flex-shrink: 0;
-    width: 28px; height: 28px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #fbbf24;
-    font-size: 15px;
-  }
-  .share-wrap input.manual-share {
-    flex: 1;
-    background: transparent;
-    border: none;
-    color: #f1f5f9;
-    font-size: 15px;
-    font-weight: 600;
-    padding: 4px 0;
-    min-width: 0;
-    width: 50px;
-    text-align: left;
-  }
-  .share-wrap input.manual-share:focus { outline: none; }
-  .share-wrap input.manual-share::placeholder { color: #475569; font-weight: 400; }
-  .share-wrap .hint-text { flex-shrink: 0; font-size: 11px; color: #64748b; padding-right: 8px; }
+  .f-row:hover { background: #273449; }
+  .f-row.header { color: #64748b; font-size: 10px; text-transform: uppercase; padding-bottom: 4px; border-bottom: 1px solid #334155; cursor: default; }
+  .f-row.header:hover { background: transparent; }
+  .f-row:last-child { border-bottom: none; }
+  
+  .f-name { font-weight: 600; color: #f1f5f9; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: flex; align-items: center; gap: 6px; }
+  .f-checkbox { width: 16px; height: 16px; border: 2px solid #475569; border-radius: 4px; display: flex; align-items: center; justify-content: center; transition: 0.2s; flex-shrink: 0; }
+  .f-checkbox svg { width: 10px; height: 10px; fill: none; stroke: #0f172a; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; opacity: 0; transition: 0.2s; }
+  
+  .f-cash { color: #4ade80; text-align: right; transition: 0.2s; }
+  .f-card { color: #38bdf8; text-align: right; transition: 0.2s; }
+  
+  .f-total { text-align: right; display: flex; flex-direction: column; align-items: flex-end; transition: 0.2s; }
+  .f-total .t-main { font-weight: 700; color: #e2e8f0; }
+  .f-total .t-note { font-size: 9px; color: #64748b; white-space: nowrap; margin-top: 1px; }
 
-  .preset-row { display: flex; gap: 6px; margin-top: 8px; width: 100%; }
-  .preset-row .preset-mini {
-    flex: 1 1 0;
-    background: transparent;
-    border: 1px solid #334155;
-    color: #94a3b8;
-    border-radius: 8px;
-    padding: 8px 4px;
-    font-size: 12px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.15s;
-    min-width: 0;
-    white-space: nowrap;
-  }
-  .preset-row .preset-mini:hover { border-color: #475569; color: #cbd5e1; }
-  .preset-row .preset-mini:active { background: #334155; color: #f1f5f9; }
+  /* Стили для оплаченных строк */
+  .f-row.paid { opacity: 0.4; }
+  .f-row.paid .f-name { text-decoration: line-through; }
+  .f-row.paid .f-cash, .f-row.paid .f-card, .f-row.paid .t-main { text-decoration: line-through; }
+  .f-row.paid .f-checkbox { background: #4ade80; border-color: #4ade80; }
+  .f-row.paid .f-checkbox svg { opacity: 1; }
 
-  .personal-wrap {
-    display: flex;
-    gap: 6px;
-    align-items: center;
-    background: #1e293b;
-    border: 1px solid #334155;
-    border-radius: 8px;
-    padding: 4px;
-    transition: border-color 0.15s;
-    width: 100%;
-    min-width: 0;
-  }
-  .personal-wrap:focus-within { border-color: #a855f7; }
-  .personal-wrap .icon {
-    flex-shrink: 0;
-    width: 28px; height: 28px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #a855f7;
-    font-size: 15px;
-  }
-  .personal-wrap input.personal {
-    flex: 1;
-    background: transparent;
-    border: none;
-    color: #f1f5f9;
-    font-size: 15px;
-    font-weight: 600;
-    padding: 4px 0;
-    min-width: 0;
-    text-align: left;
-    width: 100%;
-  }
-  .personal-wrap input.personal:focus { outline: none; }
-  .personal-wrap input.personal::placeholder { color: #475569; font-weight: 400; }
-  .personal-wrap .hint-text { flex-shrink: 0; font-size: 11px; color: #64748b; padding-right: 8px; }
+  .final-summary { display: flex; justify-content: space-between; padding-top: 10px; margin-top: 6px; border-top: 1px solid #334155; font-size: 13px; font-weight: 600; }
+  .final-summary .lbl { color: #94a3b8; }
+  .final-summary .val { color: #4ade80; }
 
-  .waiter .info {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 8px;
-    font-size: 13px;
-    padding-top: 10px;
-    border-top: 1px solid #1e293b;
-    margin-top: 12px;
-    flex-wrap: wrap;
+  /* ===== БЛОК ТЕЛЕФОНОВ ===== */
+  .contacts-card { background: #1e293b; border-radius: 12px; padding: 14px; margin-top: 14px; border: 1px solid #334155; }
+  .contacts-card .title { font-size: 13px; text-transform: uppercase; color: #94a3b8; margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
+  
+  .contact-item {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 8px 10px; background: #0f172a; border-radius: 8px; margin-bottom: 6px;
+    cursor: pointer; transition: 0.2s; border: 1px solid transparent;
   }
-  .waiter .info .share { color: #94a3b8; white-space: nowrap; }
-  .waiter .info .share b { color: #fbbf24; }
-  .waiter .info .payout { color: #94a3b8; text-align: right; line-height: 1.5; }
-  .waiter .info .payout b { color: #4ade80; }
-  .waiter .info .payout .rounded { color: #94a3b8; font-size: 11px; }
-  .waiter.over .info .payout b { color: #f87171; }
-  .waiter .warning {
-    font-size: 12px;
-    color: #f87171;
-    margin-top: 8px;
-    text-align: right;
-    font-weight: 600;
+  .contact-item:last-child { margin-bottom: 0; }
+  .contact-item:hover { background: #1e293b; }
+  .contact-item:active { transform: scale(0.98); }
+  
+  .contact-info { display: flex; flex-direction: column; gap: 2px; flex: 1; min-width: 0; }
+  .contact-name { font-size: 13px; color: #f1f5f9; font-weight: 600; }
+  .contact-bank { font-size: 10px; color: #64748b; min-height: 12px; }
+  .contact-phone { font-size: 13px; color: #38bdf8; font-family: monospace; font-weight: 600; text-decoration: none; margin-top: 2px; }
+  
+  .copy-btn {
+    background: #334155; color: #e2e8f0; border: none; border-radius: 6px;
+    padding: 8px 12px; font-size: 11px; font-weight: 600; cursor: pointer;
+    display: flex; align-items: center; gap: 4px; transition: 0.2s; flex-shrink: 0;
   }
+  .copy-btn.copied { background: #4ade80; color: #0f172a; }
+  .copy-btn svg { width: 14px; height: 14px; }
 
-  .btn {
-    width: 100%;
-    padding: 12px;
-    border-radius: 10px;
-    border: none;
-    font-size: 15px;
-    font-weight: 600;
-    cursor: pointer;
-    margin-top: 8px;
-  }
+  /* Формула расчета */
+  .formula-card { background: #1e293b; border-radius: 12px; margin-top: 14px; border: 1px solid #334155; overflow: hidden; }
+  .formula-header { padding: 12px 14px; font-size: 13px; color: #94a3b8; font-weight: 600; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
+  .formula-header:active { background: #273449; }
+  .formula-body { display: none; padding: 0 14px 14px 14px; font-size: 12px; color: #cbd5e1; line-height: 1.6; border-top: 1px dashed #334155; }
+  .formula-card.open .formula-body { display: block; }
+  .formula-line { display: flex; justify-content: space-between; padding: 4px 0; border-bottom: 1px solid #0f172a; }
+  .formula-line:last-child { border-bottom: none; }
+  .formula-line .lbl { color: #94a3b8; }
+  .formula-line .val { font-weight: 600; color: #fff; }
+  .formula-sep { padding: 8px 0 4px; font-weight: 700; color: #38bdf8; text-transform: uppercase; font-size: 11px; letter-spacing: 0.5px; }
+
+  .round-info { font-size: 12px; color: #94a3b8; margin-top: 12px; padding: 10px; background: #1e293b; border-radius: 8px; border: 1px dashed #334155; text-align: center; }
+  .round-info .val { color: #fbbf24; font-weight: 600; }
+
+  .btn { width: 100%; padding: 12px; border-radius: 8px; border: none; font-size: 14px; font-weight: 600; cursor: pointer; margin-top: 10px; }
   .btn-add { background: #334155; color: #e2e8f0; }
-  .btn-add:active { background: #475569; }
-  .btn-reset { background: #7f1d1d; color: #fecaca; margin-top: 6px; }
-  .btn-reset:active { background: #991b1b; }
-  .final {
-    background: linear-gradient(135deg, #1e40af, #1e3a8a);
-    border-radius: 14px;
-    padding: 16px;
-    margin-top: 14px;
-  }
-  .final .line {
-    display: flex;
-    justify-content: space-between;
-    padding: 6px 0;
-    font-size: 15px;
-  }
-  .final .line.total {
-    font-size: 17px;
-    font-weight: 700;
-    border-top: 1px solid rgba(255,255,255,0.2);
-    padding-top: 10px;
-    margin-top: 6px;
-  }
-  .final .check {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    margin-top: 10px;
-    font-size: 14px;
-    color: #4ade80;
-  }
-  .round-card {
-    background: #1e293b;
-    border-radius: 14px;
-    padding: 14px;
-    margin-top: 14px;
-    border: 1px solid #334155;
-  }
-  .round-card .title {
-    font-size: 13px;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: #94a3b8;
-    margin-bottom: 10px;
-  }
-  .round-card .line {
-    display: flex;
-    justify-content: space-between;
-    padding: 5px 0;
-    font-size: 13px;
-    color: #94a3b8;
-  }
-  .round-card .line .v {
-    color: #fbbf24;
-    font-weight: 600;
-  }
-  .round-card .line.total {
-    border-top: 1px solid #334155;
-    margin-top: 6px;
-    padding-top: 8px;
-    font-size: 14px;
-    color: #e2e8f0;
-    font-weight: 600;
-  }
-  .round-card .line.total .v { color: #a855f7; }
-  .payout-card {
-    background: #0f172a;
-    border-radius: 14px;
-    padding: 16px;
-    margin-top: 14px;
-    border: 1px solid #334155;
-  }
-  .payout-card h3 {
-    font-size: 14px;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: #94a3b8;
-    margin: 0 0 12px;
-  }
-  .payout-section {
-    background: #1e293b;
-    border-radius: 10px;
-    padding: 12px;
-    margin-bottom: 10px;
-  }
-  .payout-section .section-title {
-    font-size: 13px;
-    font-weight: 600;
-    margin-bottom: 8px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 4px;
-  }
-  .payout-section.cash .section-title { color: #4ade80; }
-  .payout-section.card .section-title { color: #38bdf8; }
-  .payout-section .pl {
-    display: flex;
-    justify-content: space-between;
-    padding: 4px 0;
-    font-size: 13px;
-    color: #94a3b8;
-    gap: 8px;
-  }
-  .payout-section .pl .v { color: #f1f5f9; font-weight: 600; }
-  .payout-section .pl.total {
-    border-top: 1px solid #334155;
-    margin-top: 6px;
-    padding-top: 8px;
-    font-weight: 600;
-    color: #e2e8f0;
-  }
-  .payout-section .pl.total .v { color: #38bdf8; }
-  .payout-section .pl.highlight .v { color: #4ade80; }
-  .payout-section .pl.return .v { color: #fbbf24; }
-  .payout-section .pl.sub {
-    font-size: 12px;
-    color: #64748b;
-    padding-left: 8px;
-  }
-  .status-ok { color: #4ade80; font-size: 12px; text-align: right; padding-top: 6px; }
-  .status-warn { color: #fbbf24; font-size: 12px; text-align: right; padding-top: 6px; }
-  .status-bad { color: #f87171; font-size: 12px; text-align: right; padding-top: 6px; }
-  .hint {
-    font-size: 12px;
-    color: #64748b;
-    text-align: left;
-    margin-top: 10px;
-  }
+  .btn-reset { background: #7f1d1d; color: #fecaca; margin-top: 14px; }
+  .hint { font-size: 11px; color: #64748b; text-align: center; margin-top: 10px; }
 </style>
 </head>
 <body>
-
-<h1>💰 Калькулятор чаевых</h1>
 
 <div class="card">
   <div class="row">
@@ -632,186 +224,300 @@
     <input type="number" id="card" placeholder="0" inputmode="decimal">
   </div>
 
-  <div class="runner-toggle" id="runnerToggle" onclick="toggleRunner()">
-    <div class="switch"></div>
-    <div class="text">
-      Раннер в смене
-      <small>−1000 ₽ из общей кассы</small>
+  <div class="row">
+    <label>Раннер</label>
+    <div class="runner-toggle" id="runnerToggle" onclick="toggleRunner()">
+      <div class="switch"></div>
+      <div class="text">Есть (введите сумму)</div>
     </div>
   </div>
+  <div class="row" id="runnerInputRow" style="display:none;">
+    <label></label>
+    <input type="number" id="runnerSum" value="1000" inputmode="decimal">
+  </div>
 
-  <div class="runner-toggle on" id="roundToggle" onclick="toggleRound()" style="margin-top:8px;">
-    <div class="switch"></div>
-    <div class="text">
-      Округление до 50 ₽
-      <small>Для официантов, бара и кухни → на посуду</small>
+  <div class="row">
+    <label>Округление</label>
+    <div class="runner-toggle on" id="roundToggle" onclick="toggleRound()">
+      <div class="switch"></div>
+      <div class="text">До 50 ₽ (вниз)</div>
     </div>
   </div>
 </div>
 
-<div class="card">
-  <div class="summary"><span>Общая касса</span><span class="val" id="total">0</span></div>
-  <div class="summary warn" id="runnerRow" style="display:none;"><span>− Раннер</span><span class="val" id="runnerOut">0</span></div>
-  <div class="summary highlight"><span>30% (мен/бар/кух)</span><span class="val" id="thirty">0</span></div>
-  <div class="summary highlight big"><span>70% (официанты + ГМ)</span><span class="val" id="seventy">0</span></div>
-</div>
-
-<div class="card">
-  <h2>30% — Менеджеры, бар, кухня <span class="tag" id="tagThirty"></span></h2>
-
-  <div class="staff-card">
-    <div class="header">
-      <div class="title">Менеджеры<small>Всего 2 доли</small></div>
-      <div class="men-buttons">
-        <button id="men1" onclick="setMen(1)">1</button>
-        <button id="men2" onclick="setMen(2)">2</button>
-      </div>
-    </div>
-    <div class="line">
-      <span class="label">Всего менеджерам</span>
-      <span class="val" id="menTotal">0</span>
-    </div>
-    <div class="line">
-      <span class="label">Каждому</span>
-      <span class="val-pay" id="menEach">0</span>
-    </div>
+<div class="summary-box">
+  <div class="summary-item">
+    <div class="lbl">30% Персоналу</div>
+    <div class="val" id="sumThirty">0</div>
   </div>
-
-  <div class="staff-card">
-    <div class="header">
-      <div class="title">Бар<small>Фиксированно ×1.50</small></div>
-    </div>
-    <div class="line">
-      <span class="label">К выплате</span>
-      <span class="val-pay" id="barPay">0</span>
-    </div>
-    <div class="line">
-      <span class="label">Округлено до</span>
-      <span class="val-round" id="barRounded">—</span>
-    </div>
-  </div>
-
-  <div class="staff-card">
-    <div class="header">
-      <div class="title">Кухня<small>Фиксированно ×0.50</small></div>
-    </div>
-    <div class="line">
-      <span class="label">К выплате (до списания)</span>
-      <span class="val-pay" id="kitchenPayRaw">0</span>
-    </div>
-    <div class="kitchen-cut">
-      <label>− Списать с кухни:</label>
-      <input type="number" id="kitchenCut" value="400" inputmode="decimal">
-      <span class="suffix">₽</span>
-    </div>
-    <div class="line minus">
-      <span class="label">Кухня итого</span>
-      <span class="val-pay" id="kitchenPay">0</span>
-    </div>
-    <div class="line">
-      <span class="label">Округлено до</span>
-      <span class="val-round" id="kitchenRounded">—</span>
-    </div>
-  </div>
-
-  <div class="breakdown">
-    <div class="bl"><span>30% (из кассы)</span><span class="v" id="bdThirty">0</span></div>
-    <div class="bl add"><span>+ Списание с кухни</span><span class="v" id="bdAdd">0</span></div>
-    <div class="bl divide"><span>= К распределению</span><span class="v" id="bdTotal">0</span></div>
-    <div class="bl"><span>Доля (÷ 4.0)</span><span class="v" id="bdShare">0</span></div>
-    <div class="bl"><span>Менеджеры ×2.0</span><span class="v" id="bdMen">0</span></div>
-    <div class="bl"><span>Бар ×1.5</span><span class="v" id="bdBar">0</span></div>
-    <div class="bl"><span>Кухня ×0.5</span><span class="v" id="bdKitchen">0</span></div>
-    <div class="bl minus"><span>− Списание с кухни</span><span class="v" id="bdMinus">0</span></div>
-    <div class="bl total"><span>Итого</span><span class="v" id="bdFinal">0</span></div>
-  </div>
-
-  <div class="summary" style="margin-top:12px; padding-top:12px; border-top:1px solid #334155;">
-    <span>Всего долей (30%)</span><span class="val">4.00</span>
+  <div class="summary-item">
+    <div class="lbl">70% Официантам</div>
+    <div class="val" id="sumSeventy">0</div>
   </div>
 </div>
 
-<div class="card">
-  <h2>70% — Официанты и гост-менеджер <span class="tag" id="tagSeventy"></span></h2>
-  <div id="waiters"></div>
-  <button class="btn btn-add" onclick="addWaiter()">+ Добавить официанта</button>
-  <div class="summary" style="margin-top:14px; padding-top:14px; border-top:1px solid #334155;">
-    <span>Всего долей (70%)</span><span class="val" id="shares">0</span>
-  </div>
-  <div class="hint" style="margin-top:8px;">
-    Авто: доля = часы / 11 (округление до 0.1). 6 ч = 0.5, ГМ = 0.5.
-  </div>
-</div>
+<div class="section-title">30% — Бар, кухня, менеджеры <span class="tag" id="tagThirty"></span></div>
 
-<div class="final">
-  <div class="line" id="fRunnerRow" style="display:none;"><span>Раннер</span><span id="fRunner">0</span></div>
-  <div class="line"><span>30% (мен/бар/кух)</span><span id="fThirty">0</span></div>
-  <div class="line"><span>70% официантам</span><span id="fSeventy">0</span></div>
-  <div class="line total"><span>ИТОГО</span><span id="fTotal">0</span></div>
-  <div class="check" id="check"></div>
-</div>
-
-<div class="round-card" id="roundCard" style="display:none;">
-  <div class="title">💰 Округление на посуду</div>
-  <div class="line">
-    <span>Официанты (округлено вниз)</span>
-    <span class="v" id="rWaiters">0</span>
-  </div>
-  <div class="line">
-    <span>Бар</span>
-    <span class="v" id="rBar">0</span>
-  </div>
-  <div class="line">
-    <span>Кухня</span>
-    <span class="v" id="rKitchen">0</span>
-  </div>
-  <div class="line total">
-    <span>Всего на посуду</span>
-    <span class="v" id="rTotal">0</span>
-  </div>
-</div>
-
-<div class="payout-card">
-  <h3>Как выдать</h3>
-
-  <div class="payout-section cash">
-    <div class="section-title">
-      <span>💵 Наличными из кассы</span>
-      <span id="cashHave"></span>
+<div class="staff-card">
+  <div class="header">
+    <div class="title">Менеджеры (на карте)</div>
+    <div class="men-toggle">
+      <button id="men1" onclick="setMen(1)">1 чел</button>
+      <button id="men2" onclick="setMen(2)">2 чел</button>
     </div>
-    <div class="pl"><span>Раннер</span><span class="v" id="pRunner">0</span></div>
-    <div class="pl"><span>Бар</span><span class="v" id="pBar">0</span></div>
-    <div class="pl"><span>Кухня</span><span class="v" id="pKitchen">0</span></div>
-    <div class="pl highlight"><span>Официантам (нал)</span><span class="v" id="pWaitersCash">0</span></div>
-    <div class="pl total"><span>Всего налом</span><span class="v" id="pCashTotal">0</span></div>
-    <div class="status-ok" id="cashStatus"></div>
+  </div>
+  <div class="line"><span>Сумма менеджерам</span><span class="val" id="menTotal">0</span></div>
+  <div class="line" style="font-size:11px; color:#64748b;"><span>Каждому</span><span id="menEach">0</span></div>
+</div>
+
+<div class="staff-card">
+  <div class="header"><div class="title">Бар (×1.5)</div></div>
+  <div class="line"><span>Наличными</span><span class="val" id="barPay">0</span></div>
+</div>
+
+<div class="staff-card">
+  <div class="header"><div class="title">Кухня (×0.5)</div></div>
+  <div class="line"><span>До списания</span><span class="val" id="kitchenPayRaw" style="color:#94a3b8;"></span></div>
+  <div class="kitchen-cut">
+    <label>− Списать:</label>
+    <input type="number" id="kitchenCut" value="400" inputmode="decimal">
+    <span style="color:#64748b;font-size:11px;">₽</span>
+  </div>
+  <div class="line" style="margin-top:4px;"><span>Наличными</span><span class="val" id="kitchenPay">0</span></div>
+</div>
+
+<div class="section-title">70% — Официанты <span class="tag" id="tagSeventy"></span></div>
+<div id="waitersList"></div>
+<button class="btn btn-add" onclick="addWaiter()">+ Добавить официанта</button>
+
+<!-- БЛОК ПЕРЕВОДА -->
+<div class="transfer-accent">
+  <div class="title">💳 Перевод менеджера (раскидчику)</div>
+  <div class="amount" id="accentTransfer">0 ₽</div>
+  <div class="transfer-math" id="accentMath"></div>
+</div>
+
+<!-- Итоговая таблица -->
+<div class="final-table">
+  <div class="title">📋 Итог: кому сколько</div>
+  <div class="f-row header">
+    <div>Сотрудник</div>
+    <div style="text-align:right;">Нал</div>
+    <div style="text-align:right;">Карта</div>
+    <div style="text-align:right;">Всего</div>
+  </div>
+  <div id="finalRows"></div>
+  <div class="final-summary">
+    <div class="lbl">Осталось выдать:</div>
+    <div class="val" id="remainingSum">0 ₽</div>
+  </div>
+</div>
+
+<!-- ===== БЛОК ТЕЛЕФОНОВ ===== -->
+<div class="contacts-card">
+  <div class="title">📱 Телефоны для перевода</div>
+  
+  <!-- 1. Виталий -->
+  <div class="contact-item" onclick="copyPhone(this, '89673204870')">
+    <div class="contact-info">
+      <div class="contact-name">Виталий</div>
+      <div class="contact-bank">Яндекс</div>
+      <div class="contact-phone">+7 967 320-48-70</div>
+    </div>
+    <div class="copy-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+      Копировать
+    </div>
   </div>
 
-  <div class="payout-section card">
-    <div class="section-title">
-      <span>💳 Переводом с карты</span>
-      <span id="cardHave"></span>
+  <!-- 2. Карина -->
+  <div class="contact-item" onclick="copyPhone(this, '89001631905')">
+    <div class="contact-info">
+      <div class="contact-name">Карина</div>
+      <div class="contact-bank">Сбер</div>
+      <div class="contact-phone">+7 900 163-19-05</div>
     </div>
-    <div class="pl"><span>Менеджеру (себе)</span><span class="v" id="pMen">0</span></div>
-    <div class="pl"><span>Официантам (карта)</span><span class="v" id="pWaitersCard">0</span></div>
-    <div class="pl return" id="pReturnRow" style="display:none;"><span>+ возврат от перебора</span><span class="v" id="pReturn">0</span></div>
-    <div class="pl" id="pCompRow" style="display:none;"><span>В т.ч. компенсация нала</span><span class="v" id="pComp">0</span></div>
-    <div class="pl total"><span>Всего с карты</span><span class="v" id="pCardTotal">0</span></div>
-    <div class="pl sub"><span>Пришло по QR</span><span class="v" id="pCardIn">0</span></div>
-    <div class="pl sub"><span>− уже у официантов</span><span class="v" id="pPersonal">0</span></div>
-    <div class="pl sub"><span>Реально на карте</span><span class="v" id="pCardReal">0</span></div>
-    <div class="status-ok" id="cardStatus"></div>
+    <div class="copy-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+      Копировать
+    </div>
   </div>
+
+  <!-- 3. Лера -->
+  <div class="contact-item" onclick="copyPhone(this, '89094622264')">
+    <div class="contact-info">
+      <div class="contact-name">Лера</div>
+      <div class="contact-bank">Сбер</div>
+      <div class="contact-phone">+7 909 462-22-64</div>
+    </div>
+    <div class="copy-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+      Копировать
+    </div>
+  </div>
+
+  <!-- 4. Камилла -->
+  <div class="contact-item" onclick="copyPhone(this, '89649495598')">
+    <div class="contact-info">
+      <div class="contact-name">Камилла</div>
+      <div class="contact-bank">Т-Банк</div>
+      <div class="contact-phone">+7 964 949-55-98</div>
+    </div>
+    <div class="copy-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+      Копировать
+    </div>
+  </div>
+
+  <!-- 5. Нура -->
+  <div class="contact-item" onclick="copyPhone(this, '89158111663')">
+    <div class="contact-info">
+      <div class="contact-name">Нура</div>
+      <div class="contact-bank">Сбер</div>
+      <div class="contact-phone">+7 915 811-16-63</div>
+    </div>
+    <div class="copy-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+      Копировать
+    </div>
+  </div>
+
+  <!-- 6. Камилла Рамазанова -->
+  <div class="contact-item" onclick="copyPhone(this, '89177309401')">
+    <div class="contact-info">
+      <div class="contact-name">Камилла Рамазанова</div>
+      <div class="contact-bank">Т-Банк</div>
+      <div class="contact-phone">+7 917 730-94-01</div>
+    </div>
+    <div class="copy-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+      Копировать
+    </div>
+  </div>
+
+  <!-- 7. Ваня -->
+  <div class="contact-item" onclick="copyPhone(this, '89529849989')">
+    <div class="contact-info">
+      <div class="contact-name">Ваня</div>
+      <div class="contact-bank">Т-Банк</div>
+      <div class="contact-phone">+7 952 984-99-89</div>
+    </div>
+    <div class="copy-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+      Копировать
+    </div>
+  </div>
+
+  <!-- 8. Саша -->
+  <div class="contact-item" onclick="copyPhone(this, '89181048990')">
+    <div class="contact-info">
+      <div class="contact-name">Саша</div>
+      <div class="contact-bank">Озон (Виктория)</div>
+      <div class="contact-phone">+7 918 104-89-90</div>
+    </div>
+    <div class="copy-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+      Копировать
+    </div>
+  </div>
+
+  <!-- 9. Леон -->
+  <div class="contact-item" onclick="copyPhone(this, '89625785788')">
+    <div class="contact-info">
+      <div class="contact-name">Леон</div>
+      <div class="contact-bank">Сбер</div>
+      <div class="contact-phone">+7 962 578-57-88</div>
+    </div>
+    <div class="copy-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+      Копировать
+    </div>
+  </div>
+
+  <!-- 10. Натали -->
+  <div class="contact-item" onclick="copyPhone(this, '89317127264')">
+    <div class="contact-info">
+      <div class="contact-name">Натали</div>
+      <div class="contact-bank">Альфа</div>
+      <div class="contact-phone">+7 931 712-72-64</div>
+    </div>
+    <div class="copy-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+      Копировать
+    </div>
+  </div>
+
+  <!-- 11. Кристина -->
+  <div class="contact-item" onclick="copyPhone(this, '89089433869')">
+    <div class="contact-info">
+      <div class="contact-name">Кристина</div>
+      <div class="contact-bank">&nbsp;</div>
+      <div class="contact-phone">+7 908 943-38-69</div>
+    </div>
+    <div class="copy-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+      Копировать
+    </div>
+  </div>
+
+  <!-- 12. Эльвира -->
+  <div class="contact-item" onclick="copyPhone(this, '89286170710')">
+    <div class="contact-info">
+      <div class="contact-name">Эльвира</div>
+      <div class="contact-bank">Сбер</div>
+      <div class="contact-phone">+7 928 617-07-10</div>
+    </div>
+    <div class="copy-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+      Копировать
+    </div>
+  </div>
+
+  <!-- 13. Настя -->
+  <div class="contact-item" onclick="copyPhone(this, '89654810875')">
+    <div class="contact-info">
+      <div class="contact-name">Настя</div>
+      <div class="contact-bank">Айзада (Сбер)</div>
+      <div class="contact-phone">+7 965 481-08-75</div>
+    </div>
+    <div class="copy-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+      Копировать
+    </div>
+  </div>
+
+  <!-- 14. Кухня -->
+  <div class="contact-item" onclick="copyPhone(this, '89996692525')">
+    <div class="contact-info">
+      <div class="contact-name">Кухня</div>
+      <div class="contact-bank">ВТБ</div>
+      <div class="contact-phone">+7 999 669-25-25</div>
+    </div>
+    <div class="copy-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+      Копировать
+    </div>
+  </div>
+</div>
+
+<div class="formula-card" id="formulaCard">
+  <div class="formula-header" onclick="document.getElementById('formulaCard').classList.toggle('open')">
+    <span>🧮 Как мы считали (Формула)</span>
+    <span style="color:#64748b; font-size:12px;">▼</span>
+  </div>
+  <div class="formula-body" id="formulaBody"></div>
+</div>
+
+<div class="round-info" id="roundInfo" style="display:none;">
+  💰 На посуду (округление): <span class="val" id="roundTotal">0</span>
 </div>
 
 <button class="btn btn-reset" onclick="resetShift()">Сбросить смену</button>
-
-<div class="hint">Данные сохраняются на этом устройстве</div>
+<div class="hint">Нажмите на строку в таблице, чтобы отметить выплату</div>
 
 <script>
-const STORAGE_KEY = 'tips-v31';
-const STD_SHIFT = 11;
-const RUNNER_SUM = 1000;
+const STORAGE_KEY = 'tips-v62';
+const STD_SHIFT = 12;
 const SHARES_30 = 4.0;
 const MEN_TOTAL = 2.0;
 const ROUND_STEP = 50;
@@ -819,22 +525,16 @@ const ROUND_STEP = 50;
 let runnerOn = false;
 let menCount = 2;
 let roundOn = true;
+let paidStatus = {}; 
 
-function fmt(n) {
-  return Math.round(n).toLocaleString('ru-RU') + ' \u20BD';
-}
-
-function roundShare(n) {
-  return Math.round(n * 10) / 10;
-}
-
-function roundDown50(n) {
-  return Math.floor(n / ROUND_STEP) * ROUND_STEP;
-}
+function fmt(n) { return Math.round(n).toLocaleString('ru-RU') + ' ₽'; }
+function roundShare(n) { return Math.round(n * 10) / 10; }
+function roundDown50(n) { return Math.floor(n / ROUND_STEP) * ROUND_STEP; }
 
 function toggleRunner() {
   runnerOn = !runnerOn;
   document.getElementById('runnerToggle').classList.toggle('on', runnerOn);
+  document.getElementById('runnerInputRow').style.display = runnerOn ? 'flex' : 'none';
   calc();
 }
 
@@ -851,130 +551,149 @@ function setMen(n) {
   calc();
 }
 
+let rowIds = { runner: 'runner', men: 'men', bar: 'bar', kitchen: 'kitchen' };
+let waiterIdCounter = 0;
+
+function togglePaid(id, el) {
+  paidStatus[id] = !paidStatus[id];
+  el.classList.toggle('paid', paidStatus[id]);
+  calc(); 
+}
+
+// Функция копирования телефона
+function copyPhone(el, phone) {
+  const cleanPhone = phone.replace(/[^\d+]/g, ''); 
+  
+  navigator.clipboard.writeText(cleanPhone).then(() => {
+    const btn = el.querySelector('.copy-btn');
+    const originalHtml = btn.innerHTML;
+    
+    // Визуальный отклик
+    btn.classList.add('copied');
+    btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg> Готово!`;
+    
+    setTimeout(() => {
+      btn.classList.remove('copied');
+      btn.innerHTML = originalHtml;
+    }, 2000);
+  }).catch(err => {
+    alert('Не удалось скопировать. Выделите номер вручную.');
+  });
+}
+
 function addWaiter(data = {}) {
-  const name = data.name || '';
-  const hours = data.hours !== undefined ? data.hours : 11;
+  const name = data.name || `Официант`;
+  const hours = data.hours !== undefined ? data.hours : 12;
   const isGM = data.isGM || false;
   const personal = data.personal !== undefined ? data.personal : '';
   const manual = data.manual || false;
   const manualShare = data.manualShare !== undefined ? data.manualShare : 1.0;
   const payType = data.payType || 'auto';
+  
+  const wid = data.id || 'w_' + (waiterIdCounter++);
+  if (data.id) waiterIdCounter = Math.max(waiterIdCounter, parseInt(data.id.split('_')[1]) + 1);
 
   const div = document.createElement('div');
-  div.className = 'waiter' + (isGM ? ' gm' : '');
+  div.className = 'waiter-card' + (isGM ? ' gm' : '');
+  div.dataset.id = wid;
+  
   div.innerHTML = `
-    <div class="top">
+    <div class="waiter-top">
       <input class="name" placeholder="Имя" value="${name}">
-      <button class="btn-remove" onclick="this.closest('.waiter').remove(); calc();">&times;</button>
+      <button class="btn-remove" onclick="this.closest('.waiter-card').remove(); calc();">&times;</button>
     </div>
-
-    <div class="section-label">Как считать долю</div>
-    <div class="mode-row">
-      <div class="segmented mode">
-        <button class="mode-auto ${!manual ? 'active' : ''}" onclick="setMode(this, false)">Авто</button>
+    
+    <div class="waiter-controls">
+      <div class="segmented">
+        <button class="mode-auto ${!manual ? 'active' : ''}" onclick="setMode(this, false)">По часам</button>
         <button class="mode-manual ${manual ? 'active' : ''}" onclick="setMode(this, true)">Вручную</button>
       </div>
       <label class="fixgm">
-        <input type="checkbox" class="gmcheck" ${isGM ? 'checked' : ''}>
-        <span>ГМ 0.5</span>
+        <input type="checkbox" class="gmcheck" ${isGM ? 'checked' : ''} style="margin:0;"> ГМ 0.5
       </label>
     </div>
 
-    <div class="section-label row-auto-label">Отработанные часы</div>
-    <div class="row-auto" style="display:${manual ? 'none' : 'block'};">
-      <div class="hours-wrap">
-        <div class="icon">🕐</div>
-        <input class="hours" type="number" step="0.5" value="${hours}" inputmode="decimal" placeholder="Часы">
-        <div class="hint-text">ч</div>
-      </div>
-      <div class="preset-row">
-        <button class="preset-mini" onclick="setHours(this, 11)">11 ч</button>
-        <button class="preset-mini" onclick="setHours(this, 12)">12 ч</button>
-        <button class="preset-mini" onclick="setHours(this, 6)">6 ч</button>
-        <button class="preset-mini" onclick="setHours(this, 13)">13 ч</button>
+    <div class="waiter-inputs row-auto" style="display:${manual ? 'none' : 'grid'};">
+      <div class="inp-group" style="grid-column: span 2;">
+        <label>Отработано часов</label>
+        <input class="hours" type="number" step="0.5" value="${hours}" inputmode="decimal">
       </div>
     </div>
 
-    <div class="section-label row-manual-label" style="display:${manual ? 'block' : 'none'};">Своя доля</div>
-    <div class="row-manual" style="display:${manual ? 'block' : 'none'};">
-      <div class="share-wrap">
-        <div class="icon">⭐</div>
-        <input class="manual-share" type="number" step="0.1" value="${manualShare}" inputmode="decimal" placeholder="Доля">
-        <div class="hint-text">×</div>
+    <div class="waiter-inputs row-manual" style="display:${manual ? 'grid' : 'none'};">
+      <div class="inp-group" style="grid-column: span 2;">
+        <label>Своя доля</label>
+        <input class="manual-share" type="number" step="0.1" value="${manualShare}" inputmode="decimal">
       </div>
     </div>
 
-    <div class="section-label">Уже получил лично на карту</div>
-    <div class="personal-wrap">
-      <div class="icon">💳</div>
-      <input class="personal" type="number" placeholder="0" value="${personal}" inputmode="decimal">
-      <div class="hint-text">₽</div>
+    <div class="waiter-inputs">
+      <div class="inp-group">
+        <label>Уже на карте (₽)</label>
+        <input class="personal" type="number" placeholder="0" value="${personal}" inputmode="decimal">
+      </div>
+      <div class="inp-group">
+        <label>Способ выдачи</label>
+        <div class="segmented pay">
+          <button class="pay-auto ${payType === 'auto' ? 'active' : ''}" onclick="setPayType(this, 'auto')">Авто</button>
+          <button class="pay-cash ${payType === 'cash' ? 'active' : ''}" onclick="setPayType(this, 'cash')">Нал</button>
+          <button class="pay-card ${payType === 'card' ? 'active' : ''}" onclick="setPayType(this, 'card')">Карта</button>
+        </div>
+      </div>
     </div>
 
-    <div class="section-label">Как выдать</div>
-    <div class="segmented pay">
-      <button class="pay-auto ${payType === 'auto' ? 'active' : ''}" data-type="auto" onclick="setPayType(this, 'auto')">Авто</button>
-      <button class="pay-cash ${payType === 'cash' ? 'active' : ''}" data-type="cash" onclick="setPayType(this, 'cash')">Нал</button>
-      <button class="pay-card ${payType === 'card' ? 'active' : ''}" data-type="card" onclick="setPayType(this, 'card')">Карта</button>
+    <div class="waiter-bottom">
+      <span class="w-info">Доля: <b>1.0</b></span>
+      <span class="w-pay">К выдаче: <b>0</b></span>
     </div>
-
-    <div class="info">
-      <span class="share">доля: <b>1.0</b></span>
-      <span class="payout">оплата: <b>0</b></span>
-    </div>
-    <div class="warning" style="display:none;"></div>
+    <div class="warning" style="display:none; font-size:11px; color:#f87171; text-align:right; margin-top:4px;"></div>
   `;
-  document.getElementById('waiters').appendChild(div);
+  
+  document.getElementById('waitersList').appendChild(div);
 
   div.querySelector('.name').addEventListener('input', calc);
   div.querySelector('.hours').addEventListener('input', calc);
   div.querySelector('.manual-share').addEventListener('input', calc);
+  div.querySelector('.personal').addEventListener('input', calc);
   div.querySelector('.gmcheck').addEventListener('change', (e) => {
     div.classList.toggle('gm', e.target.checked);
     calc();
   });
-  div.querySelector('.personal').addEventListener('input', calc);
+  
   calc();
 }
 
 function setMode(btn, isManual) {
-  const w = btn.closest('.waiter');
-  w.querySelector('.mode-auto').classList.toggle('active', !isManual);
-  w.querySelector('.mode-manual').classList.toggle('active', isManual);
-  w.querySelector('.row-auto').style.display = isManual ? 'none' : 'block';
-  w.querySelector('.row-manual').style.display = isManual ? 'block' : 'none';
-  w.querySelector('.row-auto-label').style.display = isManual ? 'none' : 'block';
-  w.querySelector('.row-manual-label').style.display = isManual ? 'block' : 'none';
+  const c = btn.closest('.waiter-card');
+  c.querySelector('.mode-auto').classList.toggle('active', !isManual);
+  c.querySelector('.mode-manual').classList.toggle('active', isManual);
+  c.querySelector('.row-auto').style.display = isManual ? 'none' : 'grid';
+  c.querySelector('.row-manual').style.display = isManual ? 'grid' : 'none';
   calc();
 }
 
 function setPayType(btn, type) {
-  const w = btn.closest('.waiter');
-  w.querySelectorAll('.segmented.pay button').forEach(b => b.classList.remove('active'));
+  const c = btn.closest('.waiter-card');
+  c.querySelectorAll('.segmented.pay button').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
   calc();
 }
 
-function setHours(btn, h) {
-  const w = btn.closest('.waiter');
-  w.querySelector('.hours').value = h;
-  calc();
-}
-
 function getWaiters() {
-  return [...document.querySelectorAll('#waiters .waiter')].map(w => {
+  return [...document.querySelectorAll('#waitersList .waiter-card')].map(c => {
     let payType = 'auto';
-    if (w.querySelector('.pay-cash').classList.contains('active')) payType = 'cash';
-    if (w.querySelector('.pay-card').classList.contains('active')) payType = 'card';
+    if (c.querySelector('.pay-cash').classList.contains('active')) payType = 'cash';
+    if (c.querySelector('.pay-card').classList.contains('active')) payType = 'card';
     return {
-      name: w.querySelector('.name').value,
-      hours: parseFloat(w.querySelector('.hours').value) || 0,
-      isGM: w.querySelector('.gmcheck').checked,
-      personal: parseFloat(w.querySelector('.personal').value) || 0,
-      isManual: w.querySelector('.mode-manual').classList.contains('active'),
-      manualShare: parseFloat(w.querySelector('.manual-share').value) || 0,
+      id: c.dataset.id,
+      name: c.querySelector('.name').value,
+      hours: parseFloat(c.querySelector('.hours').value) || 0,
+      isGM: c.querySelector('.gmcheck').checked,
+      personal: parseFloat(c.querySelector('.personal').value) || 0,
+      isManual: c.querySelector('.mode-manual').classList.contains('active'),
+      manualShare: parseFloat(c.querySelector('.manual-share').value) || 0,
       payType: payType,
-      el: w
+      el: c
     };
   });
 }
@@ -983,290 +702,249 @@ function calc() {
   const cash = parseFloat(document.getElementById('cash').value) || 0;
   const card = parseFloat(document.getElementById('card').value) || 0;
   const kitchenCut = parseFloat(document.getElementById('kitchenCut').value) || 0;
+  const runnerSum = runnerOn ? (parseFloat(document.getElementById('runnerSum').value) || 0) : 0;
 
   const total = cash + card;
-  const runnerCut = runnerOn ? RUNNER_SUM : 0;
-  const afterRunner = Math.max(0, total - runnerCut);
+  const afterRunner = Math.max(0, total - runnerSum);
   const thirty = afterRunner * 0.3;
   const seventy = afterRunner * 0.7;
 
-  document.getElementById('total').textContent = fmt(total);
-  document.getElementById('runnerRow').style.display = runnerOn ? 'flex' : 'none';
-  document.getElementById('fRunnerRow').style.display = runnerOn ? 'flex' : 'none';
-  document.getElementById('runnerOut').textContent = '− ' + fmt(runnerCut);
-  document.getElementById('thirty').textContent = fmt(thirty);
-  document.getElementById('seventy').textContent = fmt(seventy);
+  document.getElementById('sumThirty').textContent = fmt(thirty);
+  document.getElementById('sumSeventy').textContent = fmt(seventy);
 
   const thirtyPlus = thirty + kitchenCut;
   const price30 = thirtyPlus / SHARES_30;
 
   const menTotalPay = price30 * MEN_TOTAL;
   const menEachPay = menTotalPay / menCount;
-  document.getElementById('menTotal').textContent = fmt(menTotalPay);
-  document.getElementById('menEach').textContent = fmt(menEachPay) + ' ×' + menCount;
-
   const barPay = price30 * 1.5;
   const kitchenPayRaw = price30 * 0.5;
   const kitchenPay = Math.max(0, kitchenPayRaw - kitchenCut);
-
-  document.getElementById('barPay').textContent = fmt(barPay);
-  document.getElementById('kitchenPayRaw').textContent = fmt(kitchenPayRaw);
-  document.getElementById('kitchenPay').textContent = fmt(kitchenPay);
-
-  // Блок наглядного расчёта
-  document.getElementById('bdThirty').textContent = fmt(thirty);
-  document.getElementById('bdAdd').textContent = '+ ' + fmt(kitchenCut);
-  document.getElementById('bdTotal').textContent = fmt(thirtyPlus);
-  document.getElementById('bdShare').textContent = fmt(price30);
-  document.getElementById('bdMen').textContent = fmt(menTotalPay);
-  document.getElementById('bdBar').textContent = fmt(barPay);
-  document.getElementById('bdKitchen').textContent = fmt(kitchenPayRaw);
-  document.getElementById('bdMinus').textContent = '− ' + fmt(kitchenCut);
-  document.getElementById('bdFinal').textContent = fmt(menTotalPay + barPay + kitchenPay);
-
-  // Округление
+  
   let barRound = barPay, kitchenRound = kitchenPay;
-  let barRoundLoss = 0, kitchenRoundLoss = 0;
+  let roundLoss30 = 0;
+  
   if (roundOn) {
     barRound = roundDown50(barPay);
     kitchenRound = roundDown50(kitchenPay);
-    barRoundLoss = barPay - barRound;
-    kitchenRoundLoss = kitchenPay - kitchenRound;
+    roundLoss30 = (barPay - barRound) + (kitchenPay - kitchenRound);
   }
 
-  if (roundOn) {
-    document.getElementById('barRounded').textContent = fmt(barRound) + ' (−' + fmt(barRoundLoss) + ')';
-    document.getElementById('kitchenRounded').textContent = fmt(kitchenRound) + ' (−' + fmt(kitchenRoundLoss) + ')';
-  } else {
-    document.getElementById('barRounded').textContent = '—';
-    document.getElementById('kitchenRounded').textContent = '—';
-  }
-
+  document.getElementById('menTotal').textContent = fmt(menTotalPay);
+  document.getElementById('menEach').textContent = fmt(menEachPay);
+  document.getElementById('barPay').textContent = fmt(barRound) + (roundOn && barPay > barRound ? ' (окр.)' : '');
+  document.getElementById('kitchenPayRaw').textContent = fmt(kitchenPayRaw);
+  document.getElementById('kitchenPay').textContent = fmt(kitchenRound) + (roundOn && kitchenPay > kitchenRound ? ' (окр.)' : '');
   document.getElementById('tagThirty').textContent = 'доля = ' + fmt(price30);
 
   const waiters = getWaiters();
-
   waiters.forEach(w => {
-    if (w.isManual) {
-      w.share = roundShare(w.manualShare);
-    } else if (w.isGM) {
-      w.share = 0.5;
-    } else if (w.hours === 6) {
-      w.share = 0.5;
-    } else {
-      w.share = roundShare(w.hours / STD_SHIFT);
-    }
+    if (w.isManual) w.share = roundShare(w.manualShare);
+    else if (w.isGM) w.share = 0.5;
+    else if (w.hours === 6) w.share = 0.5;
+    else w.share = roundShare(w.hours / STD_SHIFT);
   });
 
   const totalShares = waiters.reduce((s, w) => s + w.share, 0);
   const perShare = totalShares > 0 ? seventy / totalShares : 0;
 
-  let totalWaitersPayout = 0;
   let totalPersonal = 0;
   let totalOver = 0;
-  let waitersRoundLoss = 0;
+  let roundLoss70 = 0;
+  let totalWaitersNetPay = 0;
+  let totalPayAll = 0;
 
   waiters.forEach(w => {
     w.pay = perShare * w.share;
-    if (roundOn && !w.isGM) {
+    
+    if (roundOn) {
       w.payRounded = roundDown50(w.pay);
-      waitersRoundLoss += w.pay - w.payRounded;
+      roundLoss70 += w.pay - w.payRounded;
     } else {
       w.payRounded = w.pay;
     }
+    
     w.needFromSources = Math.max(0, w.payRounded - w.personal);
     w.over = Math.max(0, w.personal - w.payRounded);
-    totalWaitersPayout += w.payRounded;
+    
     totalPersonal += w.personal;
     totalOver += w.over;
+    totalWaitersNetPay += w.needFromSources;
+    totalPayAll += w.payRounded;
   });
 
-  const cardReal = Math.max(0, card - totalPersonal);
-  const staffCashNeed = runnerCut + barRound + kitchenRound;
-  const cashForStaff = Math.min(staffCashNeed, cash);
-  const cashLeftAfterStaff = Math.max(0, cash - cashForStaff);
-  const staffCashShortage = Math.max(0, staffCashNeed - cash);
-
+  const cashLeftAfterStaff = Math.max(0, cash - (runnerSum + barRound + kitchenRound));
   let cashLeft = cashLeftAfterStaff;
 
   waiters.forEach(w => {
     if (w.payType === 'cash') {
       const give = Math.min(w.needFromSources, cashLeft);
-      w.fromCash = give;
-      w.fromCard = w.needFromSources - give;
-      cashLeft -= give;
-    } else {
-      w.fromCash = 0;
-      w.fromCard = 0;
-    }
+      w.fromCash = give; w.fromCard = w.needFromSources - give; cashLeft -= give;
+    } else { w.fromCash = 0; w.fromCard = 0; }
   });
-
   waiters.forEach(w => {
     if (w.payType === 'auto') {
       const give = Math.min(w.needFromSources, cashLeft);
-      w.fromCash = give;
-      w.fromCard = w.needFromSources - give;
-      cashLeft -= give;
+      w.fromCash = give; w.fromCard = w.needFromSources - give; cashLeft -= give;
     }
   });
-
   waiters.forEach(w => {
     if (w.payType === 'card') {
-      w.fromCash = 0;
-      w.fromCard = w.needFromSources;
+      w.fromCash = 0; w.fromCard = w.needFromSources;
     }
   });
 
-  let totalWaitersCash = 0;
   let totalWaitersCard = 0;
 
   waiters.forEach(w => {
-    totalWaitersCash += w.fromCash;
     totalWaitersCard += w.fromCard;
-
-    w.el.querySelector('.share b').textContent = w.share.toFixed(1);
-    const payoutEl = w.el.querySelector('.payout');
-
+    w.el.classList.toggle('over', w.over > 0);
+    w.el.querySelector('.w-info b').textContent = w.share.toFixed(1);
+    w.el.querySelector('.w-pay b').textContent = fmt(w.payRounded);
+    
+    const warnEl = w.el.querySelector('.warning');
     if (w.over > 0) {
-      w.el.classList.add('over');
-      const warn = w.el.querySelector('.warning');
-      warn.style.display = 'block';
-      warn.textContent = '⚠ Перебрал ' + fmt(w.over) + ' — вернуть в котёл';
-      payoutEl.innerHTML = 'причитается: <b>' + fmt(w.payRounded) + '</b><br>уже на карте: <b>' + fmt(w.personal) + '</b>';
-    } else if (w.needFromSources === 0 && w.personal > 0) {
-      w.el.classList.remove('over');
-      w.el.querySelector('.warning').style.display = 'none';
-      payoutEl.innerHTML = 'причитается: <b>' + fmt(w.payRounded) + '</b><br>всё уже на карте';
+      warnEl.style.display = 'block';
+      warnEl.textContent = `⚠ Перебрал на ${fmt(w.over)} (должен вернуть)`;
     } else {
-      w.el.classList.remove('over');
-      w.el.querySelector('.warning').style.display = 'none';
-      let detail = 'причитается: <b>' + fmt(w.payRounded) + '</b>';
-      if (w.personal > 0) {
-        detail += '<br>уже на карте: <b>' + fmt(w.personal) + '</b>';
-      }
-      detail += '<br>налом: <b>' + fmt(w.fromCash) + '</b> / карта: <b>' + fmt(w.fromCard) + '</b>';
-      if (roundOn && !w.isGM && w.pay > w.payRounded) {
-        detail += '<br><span class="rounded">округлено вниз на ' + fmt(w.pay - w.payRounded) + '</span>';
-      }
-      payoutEl.innerHTML = detail;
+      warnEl.style.display = 'none';
     }
   });
 
-  document.getElementById('shares').textContent = totalShares.toFixed(1);
-  document.getElementById('tagSeventy').textContent = totalShares > 0 ? 'доля = ' + fmt(perShare) : '';
-
-  document.getElementById('fRunner').textContent = fmt(runnerCut);
-  document.getElementById('fThirty').textContent = fmt(thirty);
-  document.getElementById('fSeventy').textContent = fmt(seventy);
-  document.getElementById('fTotal').textContent = fmt(runnerCut + thirty + seventy);
-
-  const sumCheck = runnerCut + thirty + seventy;
-  const check = document.getElementById('check');
-  if (total > 0 && Math.abs(sumCheck - total) < 1) {
-    check.textContent = '✓ Всё сходится';
-    check.style.color = '#4ade80';
-  } else if (total > 0) {
-    check.textContent = '⚠ Разница: ' + fmt(total - sumCheck);
-    check.style.color = '#f87171';
-  } else {
-    check.textContent = '';
+  // АКЦЕНТ: Перевод менеджера
+  const accentAmount = totalWaitersCard;
+  document.getElementById('accentTransfer').textContent = fmt(accentAmount);
+  
+  let mathHtml = '';
+  mathHtml += `<div><span class="lbl">Всего официантам (начислено):</span><span class="val">${fmt(totalPayAll)}</span></div>`;
+  
+  if (totalPersonal > 0) {
+    mathHtml += `<div><span class="lbl">− Уже есть на картах:</span><span class="val">${fmt(totalPersonal)}</span></div>`;
+  }
+  
+  const paidCashToWaiters = waiters.reduce((s, w) => s + w.fromCash, 0);
+  if (paidCashToWaiters > 0) {
+    mathHtml += `<div><span class="lbl">− Выдано наличными из кассы:</span><span class="val">${fmt(paidCashToWaiters)}</span></div>`;
   }
 
-  const roundCard = document.getElementById('roundCard');
-  if (roundOn) {
-    roundCard.style.display = 'block';
-    document.getElementById('rWaiters').textContent = '−' + fmt(waitersRoundLoss);
-    document.getElementById('rBar').textContent = '−' + fmt(barRoundLoss);
-    document.getElementById('rKitchen').textContent = '−' + fmt(kitchenRoundLoss);
-    document.getElementById('rTotal').textContent = fmt(waitersRoundLoss + barRoundLoss + kitchenRoundLoss);
-  } else {
-    roundCard.style.display = 'none';
-  }
-
-  document.getElementById('pRunner').textContent = fmt(runnerCut);
-  document.getElementById('pBar').textContent = fmt(barRound);
-  document.getElementById('pKitchen').textContent = fmt(kitchenRound);
-  document.getElementById('pWaitersCash').textContent = fmt(totalWaitersCash);
-
-  const totalCashOut = cashForStaff + totalWaitersCash;
-  document.getElementById('pCashTotal').textContent = fmt(totalCashOut);
-  document.getElementById('cashHave').textContent = 'в кассе ' + fmt(cash);
-
-  const cashStatus = document.getElementById('cashStatus');
-  if (staffCashShortage > 0) {
-    cashStatus.textContent = '⚠ Не хватает ' + fmt(staffCashShortage) + ' — компенсируется переводом';
-    cashStatus.className = 'status-warn';
-  } else if (cash > 0) {
-    cashStatus.textContent = '✓ Хватает (' + fmt(cash - totalCashOut) + ' остаётся)';
-    cashStatus.className = 'status-ok';
-  } else {
-    cashStatus.textContent = '';
-  }
-
-  const totalFromCard = totalWaitersCard + menTotalPay + staffCashShortage + totalOver;
-
-  document.getElementById('pMen').textContent = fmt(menTotalPay);
-  document.getElementById('pWaitersCard').textContent = fmt(totalWaitersCard);
-  document.getElementById('pCardTotal').textContent = fmt(totalFromCard);
-  document.getElementById('pCardIn').textContent = fmt(card);
-  document.getElementById('pPersonal').textContent = '− ' + fmt(totalPersonal);
-  document.getElementById('pCardReal').textContent = fmt(cardReal);
-  document.getElementById('cardHave').textContent = 'на карте ' + fmt(cardReal);
-
-  const returnRow = document.getElementById('pReturnRow');
   if (totalOver > 0) {
-    returnRow.style.display = 'flex';
-    document.getElementById('pReturn').textContent = fmt(totalOver);
-  } else {
-    returnRow.style.display = 'none';
+    mathHtml += `<div><span class="lbl">+ Возвраты от переборов:</span><span class="val">${fmt(totalOver)}</span></div>`;
+  }
+  
+  mathHtml += `<div class="total-line"><span class="lbl">= Итого перевести на карту:</span><span class="val">${fmt(accentAmount)}</span></div>`;
+  
+  document.getElementById('accentMath').innerHTML = mathHtml;
+
+  // ИТОГОВАЯ ТАБЛИЦА
+  const finalRows = document.getElementById('finalRows');
+  finalRows.innerHTML = '';
+  let remainingSum = 0;
+  
+  function addRow(id, name, cashV, cardV, payTotal, personalV) {
+    if (cashV === 0 && cardV === 0 && payTotal === 0) return;
+    
+    let note = '';
+    if (personalV > 0 && payTotal > 0) {
+       note = `<div class="t-note">(доля ${Math.round(payTotal)}, уже на карте ${Math.round(personalV)})</div>`;
+    }
+    
+    const isPaid = !!paidStatus[id];
+    const rowTotal = cashV + cardV;
+    if (!isPaid) remainingSum += rowTotal;
+
+    const row = document.createElement('div');
+    row.className = 'f-row' + (isPaid ? ' paid' : '');
+    row.onclick = function() { togglePaid(id, this); };
+    
+    row.innerHTML = `
+      <div class="f-name">
+        <div class="f-checkbox">
+          <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </div>
+        ${name}
+      </div>
+      <div class="f-cash">${cashV > 0 ? Math.round(cashV) : '—'}</div>
+      <div class="f-card">${cardV > 0 ? Math.round(cardV) : '—'}</div>
+      <div class="f-total">
+        <span class="t-main">${Math.round(rowTotal)} ₽</span>
+        ${note}
+      </div>
+    `;
+    finalRows.appendChild(row);
   }
 
-  const compRow = document.getElementById('pCompRow');
-  if (staffCashShortage > 0) {
-    compRow.style.display = 'flex';
-    document.getElementById('pComp').textContent = fmt(staffCashShortage);
-  } else {
-    compRow.style.display = 'none';
-  }
+  if (runnerOn) addRow(rowIds.runner, 'Раннер', runnerSum, 0, 0, 0);
+  addRow(rowIds.men, 'Менеджеры', 0, menTotalPay, 0, 0);
+  addRow(rowIds.bar, 'Бар', barRound, 0, 0, 0);
+  addRow(rowIds.kitchen, 'Кухня', kitchenRound, 0, 0, 0);
+  
+  waiters.forEach(w => {
+    addRow(w.id, w.name || 'Без имени', w.fromCash, w.fromCard, w.payRounded, w.personal);
+  });
 
-  const cardStatus = document.getElementById('cardStatus');
-  if (totalFromCard > cardReal) {
-    cardStatus.textContent = '⚠ Не хватает ' + fmt(totalFromCard - cardReal);
-    cardStatus.className = 'status-bad';
-  } else if (cardReal > 0) {
-    cardStatus.textContent = '✓ Хватает (' + fmt(cardReal - totalFromCard) + ' остаётся)';
-    cardStatus.className = 'status-ok';
-  } else {
-    cardStatus.textContent = '';
-  }
+  document.getElementById('remainingSum').textContent = fmt(remainingSum);
+
+  // ФОРМУЛА
+  const totalRoundLoss = roundLoss30 + roundLoss70;
+  let fBody = `
+    <div class="formula-sep">Общие суммы</div>
+    <div class="formula-line"><span class="lbl">Общая касса (нал + карта)</span><span class="val">${fmt(total)}</span></div>
+    <div class="formula-line"><span class="lbl">− Раннер</span><span class="val">${fmt(runnerSum)}</span></div>
+    <div class="formula-line"><span class="lbl">= Остаток</span><span class="val">${fmt(afterRunner)}</span></div>
+    
+    <div class="formula-sep">Котёл 30% (Бар, кухня, менеджеры)</div>
+    <div class="formula-line"><span class="lbl">30% от остатка</span><span class="val">${fmt(thirty)}</span></div>
+    <div class="formula-line"><span class="lbl">+ Возврат с кухни</span><span class="val">${fmt(kitchenCut)}</span></div>
+    <div class="formula-line"><span class="lbl">= К распределению (4 доли)</span><span class="val">${fmt(thirtyPlus)}</span></div>
+    <div class="formula-line"><span class="lbl">Цена 1 доли</span><span class="val">${fmt(price30)}</span></div>
+    <div class="formula-line"><span class="lbl">Менеджеры (2 доли)</span><span class="val">${fmt(menTotalPay)}</span></div>
+    <div class="formula-line"><span class="lbl">Бар (1.5 доли)</span><span class="val">${fmt(barPay)}</span></div>
+    <div class="formula-line"><span class="lbl">Кухня (0.5 доли − ${fmt(kitchenCut)})</span><span class="val">${fmt(kitchenPay)}</span></div>
+
+    <div class="formula-sep">Котёл 70% (Официанты)</div>
+    <div class="formula-line"><span class="lbl">70% от остатка</span><span class="val">${fmt(seventy)}</span></div>
+    <div class="formula-line"><span class="lbl">Всего долей у официантов</span><span class="val">${totalShares.toFixed(1)}</span></div>
+    <div class="formula-line"><span class="lbl">Цена 1 доли</span><span class="val">${fmt(perShare)}</span></div>
+    <div class="formula-line"><span class="lbl">Итого начислено официантам</span><span class="val">${fmt(totalPayAll)}</span></div>
+    
+    ${roundOn ? `
+    <div class="formula-sep">Округление (вниз до 50₽)</div>
+    <div class="formula-line"><span class="lbl">Округлено у 30% (бар, кухня)</span><span class="val">${fmt(roundLoss30)}</span></div>
+    <div class="formula-line"><span class="lbl">Округлено у 70% (официанты)</span><span class="val">${fmt(roundLoss70)}</span></div>
+    <div class="formula-line"><span class="lbl">= Итого на посуду</span><span class="val">${fmt(totalRoundLoss)}</span></div>
+    ` : ''}
+  `;
+  document.getElementById('formulaBody').innerHTML = fBody;
+
+  document.getElementById('roundInfo').style.display = (roundOn && totalRoundLoss > 0) ? 'block' : 'none';
+  document.getElementById('roundTotal').textContent = fmt(totalRoundLoss);
 
   save();
 }
 
 function resetShift() {
-  if (!confirm('Сбросить смену? Все данные будут удалены.')) return;
+  if (!confirm('Сбросить смену?')) return;
   localStorage.removeItem(STORAGE_KEY);
   document.getElementById('cash').value = '';
   document.getElementById('card').value = '';
   document.getElementById('kitchenCut').value = '400';
-  runnerOn = false;
-  roundOn = true;
+  document.getElementById('runnerSum').value = '1000';
+  runnerOn = false; roundOn = true;
+  paidStatus = {}; 
+  waiterIdCounter = 0;
+  
   document.getElementById('runnerToggle').classList.remove('on');
   document.getElementById('roundToggle').classList.add('on');
-  document.getElementById('waiters').innerHTML = '';
+  document.getElementById('runnerInputRow').style.display = 'none';
+  document.getElementById('waitersList').innerHTML = '';
   setMen(2);
-  addDefaultWaiters();
+  
+  addWaiter({ name: 'Утренний 1', hours: 12 });
+  addWaiter({ name: 'Утренний 2', hours: 12 });
+  addWaiter({ name: 'Вечерний 1', hours: 12 });
+  addWaiter({ name: 'Вечерний 2', hours: 12 });
+  addWaiter({ name: 'Гост-менеджер', hours: 12, isGM: true });
   calc();
-}
-
-function addDefaultWaiters() {
-  addWaiter({ name: 'Официант 1', hours: 11 });
-  addWaiter({ name: 'Официант 2', hours: 11 });
-  addWaiter({ name: 'Официант 3', hours: 11 });
-  addWaiter({ name: 'Официант 4', hours: 11 });
-  addWaiter({ name: 'Официант 5', hours: 11 });
-  addWaiter({ name: 'Вечерний', hours: 6 });
-  addWaiter({ name: 'Гост-менеджер', hours: 11, isGM: true });
 }
 
 function save() {
@@ -1274,17 +952,12 @@ function save() {
     cash: document.getElementById('cash').value,
     card: document.getElementById('card').value,
     kitchenCut: document.getElementById('kitchenCut').value,
-    runnerOn: runnerOn,
-    menCount: menCount,
-    roundOn: roundOn,
+    runnerSum: document.getElementById('runnerSum').value,
+    runnerOn, roundOn, menCount,
+    paidStatus,
     waiters: getWaiters().map(w => ({
-      name: w.name,
-      hours: w.hours,
-      isGM: w.isGM,
-      personal: w.personal,
-      manual: w.isManual,
-      manualShare: w.manualShare,
-      payType: w.payType
+      id: w.id, name: w.name, hours: w.hours, isGM: w.isGM, personal: w.personal,
+      manual: w.isManual, manualShare: w.manualShare, payType: w.payType
     }))
   };
   localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
@@ -1297,22 +970,32 @@ function load() {
       document.getElementById('cash').value = data.cash || '';
       document.getElementById('card').value = data.card || '';
       document.getElementById('kitchenCut').value = data.kitchenCut || '400';
+      document.getElementById('runnerSum').value = data.runnerSum || '1000';
       runnerOn = data.runnerOn || false;
-      menCount = data.menCount || 2;
       roundOn = data.roundOn !== undefined ? data.roundOn : true;
+      menCount = data.menCount || 2;
+      paidStatus = data.paidStatus || {};
+      
       document.getElementById('runnerToggle').classList.toggle('on', runnerOn);
       document.getElementById('roundToggle').classList.toggle('on', roundOn);
+      document.getElementById('runnerInputRow').style.display = runnerOn ? 'flex' : 'none';
       document.getElementById('men1').classList.toggle('active', menCount === 1);
       document.getElementById('men2').classList.toggle('active', menCount === 2);
+      
       (data.waiters || []).forEach(w => addWaiter(w));
       return;
     }
   } catch(e) {}
+  
   setMen(2);
-  addDefaultWaiters();
+  addWaiter({ name: 'Утренний 1', hours: 12 });
+  addWaiter({ name: 'Утренний 2', hours: 12 });
+  addWaiter({ name: 'Вечерний 1', hours: 12 });
+  addWaiter({ name: 'Вечерний 2', hours: 12 });
+  addWaiter({ name: 'Гост-менеджер', hours: 12, isGM: true });
 }
 
-['cash','card','kitchenCut'].forEach(id => {
+['cash','card','kitchenCut','runnerSum'].forEach(id => {
   document.getElementById(id).addEventListener('input', calc);
 });
 
